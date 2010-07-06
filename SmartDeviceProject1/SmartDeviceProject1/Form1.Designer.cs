@@ -32,6 +32,7 @@
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -41,6 +42,7 @@
             // menuItem1
             // 
             this.menuItem1.MenuItems.Add(this.menuItem2);
+            this.menuItem1.MenuItems.Add(this.menuItem3);
             this.menuItem1.Text = "LINK Menu";
             this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
             // 
@@ -48,6 +50,10 @@
             // 
             this.menuItem2.Text = "Send Message";
             this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click_1);
+            // 
+            // menuItem3
+            // 
+            this.menuItem3.Text = "Coupon";
             // 
             // Form1
             // 
@@ -66,6 +72,7 @@
 
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem menuItem2;
+        private System.Windows.Forms.MenuItem menuItem3;
     }
 }
 
