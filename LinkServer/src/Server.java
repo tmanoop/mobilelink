@@ -16,15 +16,19 @@
 
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.io.*;
 
 public class Server
 {
 	// Server Object constructor
+	@SuppressWarnings("static-access")
 	public Server()
 	{
+		int size = 10;
 		ArrayList<User> mobileUsers = new ArrayList<User>();
-		LCA lca = new LCA(mobileUsers);
+		int[][] M = new int[size][size];
+		LCA lca = new LCA(mobileUsers,M);
 		try
 		{
 			int clientNumber = 0;
@@ -33,8 +37,8 @@ public class Server
 			System.out.println("This is a Server at ");
 			
 			// Notify the IP Address and Port Number to the user
-			System.out.println("IP Address		: " +((serverSocket.getInetAddress()).getLocalHost()).getHostAddress());
-			System.out.println("Port Number		: 8000");
+			System.out.println("IP Address	: " +((serverSocket.getInetAddress()).getLocalHost()).getHostAddress());
+			System.out.println("Port Number	: 8000");
 
 			// Accept clients one after another
 			while(true)
@@ -59,21 +63,35 @@ public class Server
 				if(!clientsMessage.equalsIgnoreCase("kill"))
 				{
 					System.out.println("Message from Client " + clientNumber + ": " + clientsMessage);
-
+					
+					//handle claims
+					if(clientsMessage.contains("claim")){
+						User c = new User();
+						//set user info in this claimer instance
+						//example of clientsMessage = 01,12,999,0
+						Scanner s = new Scanner(clientsMessage).useDelimiter(",");
+						c.id = s.nextInt();
+						c.location = s.nextInt();
+						c.serviceID = s.nextInt();
+						c.time = s.nextInt();
+						if(lca.decisionProcess(c) == 1)
+						{
+							mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore + 0.1;
+							//then send to LBS that claimer location is correct
+						} else
+						{
+							//his claim is rejected
+						}
+					}
+					
+					//handle verifications
+					if(clientsMessage.contains("verification")){
+						
+					}
+					
 					// Send response to client
 					outputStream.print("Message Recieved...");
-					User c = new User();
-					//set user info in this claimer instance
-					c.id = 0;
-					c.location = 0;
-					c.serviceID = 0;
-					c.time = 0;
-					if(lca.decisionProcess(c) == 1){
-						mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore + 0.1;
-						//then send to LBS that claimer location is correct
-					} else{
-						//his claim is rejected
-					}
+					
 					outputStream.flush();
 					outputStream.close();
 					inputStream.close();
