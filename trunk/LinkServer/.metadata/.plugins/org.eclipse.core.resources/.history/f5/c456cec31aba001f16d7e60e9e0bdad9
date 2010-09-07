@@ -1,0 +1,2 @@
+HasNeighbors(c){
+   }
