@@ -56,32 +56,17 @@ namespace SmartDeviceProject1
 
         private void menuItem2_Click_1(object sender, EventArgs e)
         {
-            //clnt.send();
-            try
-            {
-                TcpClient tcpclnt = new TcpClient();
-                //Console.WriteLine("Connecting.....");
-                tcpclnt.Connect("128.235.34.15", 8000); // use the ipaddress as in the server program
-                //Console.WriteLine("Connected");
-                Console.Write("Enter the string to be transmitted : ");
-//                String str = Console.ReadLine();
-                String str = "Hello Hero!!";
-                Stream stm = tcpclnt.GetStream();
-                ASCIIEncoding asen = new ASCIIEncoding();
-                byte[] ba = asen.GetBytes(str);
-                //Console.WriteLine("Transmitting.....");
-                stm.Write(ba, 0, ba.Length);
-                /*byte[] bb = new byte[100];
-                int k = stm.Read(bb, 0, 100);
-                for (int i = 0; i < k; i++)
-                    Console.Write(Convert.ToChar(bb[i]));*/
-                tcpclnt.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error..... " + ex.StackTrace);
-            }
+            textBox1.Text = "Sending Location claim to LCA.. \r\n";
+            //clnt.sendToLCA(textBox1);
+            clnt.connect(textBox1);
+            
+            
+        }
 
+        private void menuItem3_Click_1(object sender, EventArgs e)
+        {
+            textBox1.Text = "Sending Location claim to LBS.. \r\n";
+            clnt.sendToLBS(textBox1);
         }
 
     }

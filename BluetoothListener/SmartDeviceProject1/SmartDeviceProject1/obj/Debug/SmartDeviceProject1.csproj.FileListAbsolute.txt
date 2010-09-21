@@ -8,3 +8,13 @@ C:\Documents and Settings\mtalasila\My Documents\Visual Studio 2008\Projects\Sma
 C:\Documents and Settings\mtalasila\My Documents\Visual Studio 2008\Projects\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.pdb
 C:\Documents and Settings\mtalasila\My Documents\Visual Studio 2008\Projects\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\InTheHand.Net.Personal.dll
 C:\Documents and Settings\mtalasila\My Documents\Visual Studio 2008\Projects\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\InTheHand.Net.Personal.xml
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\SmartDeviceProject1.exe
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\SmartDeviceProject1.pdb
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\InTheHand.Net.Personal.dll
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\InTheHand.Net.Personal.xml
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\ResolveAssemblyReference.cache
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.Form1.resources
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.Properties.Resources.resources
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.csproj.GenerateResource.Cache
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.exe
+C:\mobilelink\BluetoothListener\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.pdb

@@ -10,3 +10,10 @@ C:\Users\ankita\Documents\Visual Studio 2008\Projects\Project1\btchatprog1\btcha
 C:\Users\ankita\Documents\Visual Studio 2008\Projects\Project1\btchatprog1\btchatprog1\obj\Debug\btchatprog1.exe
 C:\Users\ankita\Documents\Visual Studio 2008\Projects\Project1\btchatprog1\btchatprog1\obj\Debug\btchatprog1.xml
 C:\Users\ankita\Documents\Visual Studio 2008\Projects\Project1\btchatprog1\btchatprog1\obj\Debug\btchatprog1.pdb
+C:\mobilelink\btchatprog1\btchatprog1\obj\Debug\ResolveAssemblyReference.cache
+C:\mobilelink\btchatprog1\btchatprog1\obj\Debug\btchatprog1.Form1.resources
+C:\mobilelink\btchatprog1\btchatprog1\obj\Debug\btchatprog1.Resources.resources
+C:\mobilelink\btchatprog1\btchatprog1\obj\Debug\btchatprog1.vbproj.GenerateResource.Cache
+C:\mobilelink\btchatprog1\btchatprog1\obj\Debug\btchatprog1.exe
+C:\mobilelink\btchatprog1\btchatprog1\obj\Debug\btchatprog1.xml
+C:\mobilelink\btchatprog1\btchatprog1\obj\Debug\btchatprog1.pdb
