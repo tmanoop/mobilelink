@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartDeviceProject1", "SmartDeviceProject1\SmartDeviceProject1.csproj", "{C4B31281-2119-429A-9502-907C2C5359FE}"
 EndProject
+Project("{B900F1C2-3D47-4FEC-85B3-04AAF18C3634}") = "LINKBLCab", "LINKBLCab\LINKBLCab.vddproj", "{0FEDEC8E-75CC-4647-9EB3-85991F6AA2A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{C4B31281-2119-429A-9502-907C2C5359FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4B31281-2119-429A-9502-907C2C5359FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4B31281-2119-429A-9502-907C2C5359FE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0FEDEC8E-75CC-4647-9EB3-85991F6AA2A4}.Debug|Any CPU.ActiveCfg = Debug
+		{0FEDEC8E-75CC-4647-9EB3-85991F6AA2A4}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

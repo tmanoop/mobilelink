@@ -33,6 +33,7 @@
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -54,6 +55,15 @@
             // menuItem3
             // 
             this.menuItem3.Text = "Coupon";
+            this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click_1);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(0, 51);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(228, 193);
+            this.textBox1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -61,6 +71,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 266);
+            this.Controls.Add(this.textBox1);
             this.Menu = this.mainMenu1;
             this.Name = "Form1";
             this.Text = "Form1";
@@ -73,6 +84,7 @@
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem menuItem2;
         private System.Windows.Forms.MenuItem menuItem3;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
