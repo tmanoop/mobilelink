@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>CS708 Query String Authentication</title>
+<script type="text/javascript"> 
+ 
+   var usr;
+   var psw;  
+ 
+function login(){ 
+
+	usr = document.getElementById('username').value;
+	psw = document.getElementById('password').value;  
+	//alert("Login called!!"); 
+	if(usr == "manoop.talasila" && psw == "manoop.talasila") {
+		//forward(storage.jsp);
+		//alert(location);
+		//location = "C:/mobilelink/CS708Assignment/WebContent/storage.jsp";
+		//alert("Login Success!!"); 
+	 }
+	else {
+		alert("Invalid Login. Access denied!!");
+		location = "login.html";
+	}
+} 
+ 
+</script>
+</head>
+<body>
+<form name="form1" action="storage.jsp" method="get">
+    <H1>CS708 Query String Authentication</H1>
+    Username: <input type="text" name="username"><br>
+    Password: <input type="password" name="password">
+    <input type=submit value="Login" ONCLICK="login()">
+</form>
+<BR>
+Assignment from: Manoop Talasila 
+</body>
+</html>

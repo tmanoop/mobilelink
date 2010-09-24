@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.TimeZone"/>
+<fullyQualifiedTypeName name="javax.crypto.spec.SecretKeySpec"/>
+<fullyQualifiedTypeName name="javax.crypto.Mac"/>
+<fullyQualifiedTypeName name="sun.misc.BASE64Encoder"/>
+<fullyQualifiedTypeName name="java.security.SignatureException"/>
+</qualifiedTypeNameHistroy>
