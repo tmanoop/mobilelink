@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<%@ page import="njit.cs708.Signature"%>
+</head>
+<body>
+<jsp:useBean id="sig" class="njit.cs708.Signature" scope="session"/>
+<H1>Files stored in S3 bucket</H1>
+
+
+<%
+//sig.test();
+String[] urls = sig.getUrls();
+
+out.println("Url1: ");
+out.println("Url1: "+);
+%>
+
+<c:url var="url0" value=urls[0]/>
+ 	<a href='${url0}'>video1</a>
+ 	<BR>
+<c:url var="url0" value=urls[0]/>
+ 	<a href='${url0}'>video1</a>
+</body>
+</html>
