@@ -17,7 +17,7 @@ public class clnt
         try
         {
             //serverSocket.getInetAddress()).getLocalHost()).getHostAddress()
-            IPAddress ipAd = IPAddress.Parse("192.168.1.4"); //use local m/c IP address, and use the same in the client
+            IPAddress ipAd = IPAddress.Parse("128.235.69.143"); //use local m/c IP address, and use the same in the client
             /* Initializes the Listener */
             TcpListener myList = new TcpListener(ipAd, 8001);
             /* Start Listeneting at the specified port */
@@ -53,7 +53,7 @@ public class clnt
         {
             TcpClient tcpclnt = new TcpClient();
             //Console.WriteLine("Connecting.....");
-            tcpclnt.Connect("192.168.1.7", 8000); // use the ipaddress as in the server program
+            tcpclnt.Connect("128.235.79.34", 8000); // use the ipaddress as in the server program
             //Console.WriteLine("Connected");
             //Console.Write("Enter the string to be transmitted : ");
             //                String str = Console.ReadLine();
@@ -81,7 +81,7 @@ public class clnt
         {
             TcpClient tcpclnt = new TcpClient();
             //Console.WriteLine("Connecting.....");
-            tcpclnt.Connect("192.168.1.6", 9000); // use the ipaddress as in the server program
+            tcpclnt.Connect("128.235.79.34", 9000); // use the ipaddress as in the server program
             //Console.WriteLine("Connected");
             //Console.Write("Enter the string to be transmitted : ");
             //                String str = Console.ReadLine();
