@@ -1,0 +1,94 @@
+/* 
+ * Program : Client.java
+ * 
+ * Description :
+ * 
+ * This is a Client program that sends the default message "Hello !" 
+ * to the server socket avaialble at the IP address provided by the user (as a command line argument).
+ * A Client Socket is created binding to an available Server Socket at the IP address Port 8000.
+ * 
+ * A Killer Client could be created from this program by invoking it as 
+ * java Client <Server_IPAddress> -k
+ * 
+ * the -k switch is case insensitive 
+ * 
+ * This Client would kill the server process.
+ * 
+ * The Server process created by the program Server.java is necessary to handle this Client.
+ *  
+ */
+
+import java.net.*;
+import java.io.*;
+
+public class Client
+{
+	// Client Object constructor
+	// String IPAddress	- Server Process IPAddress
+	// Boolean kill		- Act as a normal Client or a Killer Client
+	public Client(String IPAddress,String msg, boolean kill,int port)
+	{
+		try
+		{
+			// Create a Client socket bound to a server at IPAddress Port 8000
+			Socket clientSocket = new Socket(IPAddress,port);
+
+			System.out.println("Client socket connected... ");
+			
+			// Create an output stream to send the message to server
+			PrintStream outputStream=new PrintStream(clientSocket.getOutputStream());
+
+			if(kill)
+			// Send a kill message to Server
+				outputStream.print("kill\n");
+			else
+			// Send the default message to Server
+				outputStream.print(msg);
+			
+			outputStream.flush();
+
+			// Create an input stream to recieve server's response
+			BufferedReader inputStream= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			System.out.println("Response from Server : "+inputStream.readLine());
+
+			// Close the input and output streams
+			inputStream.close();
+			outputStream.close(); 
+
+			clientSocket.close();
+
+		}
+
+		// Catch any exception in execution of the above statements and notify user
+		catch(Exception e)
+		{
+			System.err.println(e);
+		}	
+	}
+	
+	public static void main(String args[])
+	{
+		// Notify user of the usage of the program
+		if(args.length == 0)
+		{
+			System.out.println(" Usage : java Client <Server_IPAddress> " + "   OR");
+			System.out.println(" Usage : java Client <Server_IPAddress> -k ... for killing the server");
+			System.exit(0);
+		}
+
+		// Check if -k switch has been given and act accordingly
+        if(args.length > 1)
+		{
+			if(args[1].equalsIgnoreCase("-k"))
+				// Create a new Killer Client
+				new Client(args[0],"Hello ! \n",true,8000);
+			else
+				// Create a new normal Client
+				new Client(args[0],"Hello ! \n",false,8000);
+		}
+		else
+			// Create a new normal Client
+			new Client(args[0],"Hello ! \n",false,8000);
+	}
+	
+}
