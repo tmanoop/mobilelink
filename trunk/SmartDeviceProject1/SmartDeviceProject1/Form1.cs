@@ -57,7 +57,7 @@ namespace SmartDeviceProject1
         private void menuItem2_Click_1(object sender, EventArgs e)
         {
             textBox1.Text = "Sending Location claim to LCA.. \r\n";
-            //clnt.sendToLCA(textBox1);
+            clnt.sendToLCA(textBox1);
             clnt.connect(textBox1);
             
             

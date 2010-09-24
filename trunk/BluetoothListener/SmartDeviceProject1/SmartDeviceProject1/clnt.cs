@@ -9,30 +9,31 @@ using InTheHand.Net.Sockets;
 using InTheHand.Net.Bluetooth;
 public class clnt
 {
-    public static void send()
+      public static void sendToLCA(TextBox textBox1)
     {
         try
         {
             TcpClient tcpclnt = new TcpClient();
-            Console.WriteLine("Connecting.....");
-            tcpclnt.Connect("192.168.1.8", 8000); // use the ipaddress as in the server program
-            Console.WriteLine("Connected");
-            Console.Write("Enter the string to be transmitted : ");
-            String str = Console.ReadLine();
+            //Console.WriteLine("Connecting.....");
+            tcpclnt.Connect("192.168.1.4", 8000); // use the ipaddress as in the server program
+            //Console.WriteLine("Connected");
+            //Console.Write("Enter the string to be transmitted : ");
+            //                String str = Console.ReadLine();
+            String str = "Claimer Location: Network Lab!! \n";
             Stream stm = tcpclnt.GetStream();
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(str);
-            Console.WriteLine("Transmitting.....");
+            //Console.WriteLine("Transmitting.....");
             stm.Write(ba, 0, ba.Length);
-            byte[] bb = new byte[100];
+            /*byte[] bb = new byte[100];
             int k = stm.Read(bb, 0, 100);
             for (int i = 0; i < k; i++)
-                Console.Write(Convert.ToChar(bb[i]));
+                Console.Write(Convert.ToChar(bb[i]));*/
             tcpclnt.Close();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine("Error..... " + e.StackTrace);
+            Console.WriteLine("Error..... " + ex.StackTrace);
         }
     }
 
@@ -64,6 +65,7 @@ public class clnt
                 MessageBox.Show("No message!!");
             else
                 textBox1.Text = textBox1.Text + " Message recieved: \r\n" + " "+s+"\r\n";
+            sendToLCA(textBox1);
             BL.Stop();
             peer.Close();
         }
