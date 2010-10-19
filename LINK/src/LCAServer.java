@@ -21,6 +21,7 @@ import java.io.*;
 
 public class LCAServer
 {
+	String LBSIP = "192.168.1.8";
 	// Server Object constructor
 	@SuppressWarnings("static-access")
 	public LCAServer()
@@ -62,19 +63,42 @@ public class LCAServer
 				// Check if the message is not "kill" and act accordingly
 				if(!clientsMessage.equalsIgnoreCase("kill"))
 				{
-					System.out.println("Message from Client " + clientNumber + ": " + clientsMessage);
+					
 					if(clientsMessage.contains("My Location")){
-						String msg = "claimer's location request recieved: ";
+						System.out.println("Message from Client " + clientNumber + ": " + clientsMessage);
+						String msg = "claimer's location request recieved!! ";
 						System.out.println(msg);
+						
+						outputStream.print("LCA recieved claim!! \r\n");
+						//mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore + 0.1;
+						//then send to LBS that claimer location is correct
+						//Client lcaClient = new Client("192.168.1.6",msg,true,9000);
+						//Socket lbsSocket = new Socket(LBSIP,9000);
+//						PrintStream lbsStream=new PrintStream(lbsSocket.getOutputStream());
+//						lbsStream.print(msg);
+//						lbsStream.flush();
+//						lbsStream.close();
+//						lbsSocket.close();
 						//mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore + 0.1;
 						//then send to LBS that claimer location is correct
 						//Client lcaClient = new Client("LBS IP",msg,true);
 					} else if(clientsMessage.contains("Claimer Location")) {
-						String msg = "LCA Decision: Claim Approved.";
+						System.out.println("Message from verifier " + clientNumber + ": " + clientsMessage);
+						String MOBIP = clientsMessage.substring(0, clientsMessage.indexOf("ClientIP") - 1).trim();
+						//InetAddress MOBIP = clientSocket.getInetAddress();
+						String msg = MOBIP + " ClientIP - LCA Decision: Claim Approved.";
 						System.out.println(msg+" sending to LBS!!");
+						
+						outputStream.print("LCA recieved claim!! \n");
 						//mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore + 0.1;
 						//then send to LBS that claimer location is correct
-						Client lcaClient = new Client("128.235.79.34",msg,true,9000);
+						//Client lcaClient = new Client("192.168.1.6",msg,true,9000);
+						Socket lbsSocket = new Socket(LBSIP,9000);
+						PrintStream lbsStream=new PrintStream(lbsSocket.getOutputStream());
+						lbsStream.print(msg);
+						lbsStream.flush();
+						lbsStream.close();
+						lbsSocket.close();
 					}
 					
 					//handle claims
@@ -93,13 +117,13 @@ public class LCAServer
 							System.out.println(msg);
 							//mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore + 0.1;
 							//then send to LBS that claimer location is correct
-							Client lcaClient = new Client("LBS IP",msg,true,9000);
+							//Client lcaClient = new Client("LBS IP",msg,true,9000);
 						} else
 						{
 							String msg = "LCA Decision: Claim Rejected for user "+c.id;
 							System.out.println(msg);
 							//his claim is rejected
-							Client lcaClient = new Client("LBS IP",msg,true,9000);
+							//Client lcaClient = new Client("LBS IP",msg,true,9000);
 						}
 						//flush the verifiers for this claimer
 						mobileUsers.get(c.id).V.clear();

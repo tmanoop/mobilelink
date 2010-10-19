@@ -56,24 +56,40 @@ public class LBSServer
 				// Check if the message is not "kill" and act accordingly
 				if(!clientsMessage.equalsIgnoreCase("kill"))
 				{
-					System.out.println("Message from Client " + clientNumber + ": " + clientsMessage);
 					
+					
+					if(clientsMessage.contains("LCA Decision")){
+						//Scanner s = new Scanner(clientsMessage);
+						System.out.println("Message from LCA : " + clientsMessage);
+						//int userID = s.nextInt();
+						//find out how to connect to mobile user using his id
+						//And then send below message.
+						String msg = "Coupon sent to claimer!! \r\n";
+						String MOBIP = clientsMessage.substring(0, clientsMessage.indexOf("ClientIP") - 1).trim();
+						//String MOBIP = "";
+						System.out.println("MOBIP: "+MOBIP);
+						//sometimes mobile client listener is not yet ready. so keeping buffer time 3secs
+						Thread.currentThread().sleep(3000);//sleep for 1000 ms
+						Socket mobClient = new Socket(MOBIP,8000);
+						PrintStream mobStream=new PrintStream(mobClient.getOutputStream());
+						mobStream.print(msg);
+						mobStream.flush();
+						mobStream.close();
+						mobClient.close();
+						
+						System.out.println(msg);
+					}
 					//if claimer, then reply back requesting location verification. "verify your location at LCA"
-					if(clientsMessage.contains("claim")){
+					else if(clientsMessage.contains("claim")){
+						System.out.println("Message from Client " + clientNumber + ": " + clientsMessage);
 						String msg = "verify your location at LCA.";
 						outputStream.print(msg);
 						//Socket mobSocket = new Socket("128.235.69.143",8001);
-						PrintStream mobStream=new PrintStream(clientSocket.getOutputStream());
-						mobStream.print(msg);
+						//PrintStream mobStream=new PrintStream(clientSocket.getOutputStream());
+						//mobStream.print(msg);
 					}
 					//if LCA, then process the service request as per the decision.
-					if(clientsMessage.contains("LCA Decision")){
-						Scanner s = new Scanner(clientsMessage);
-						int userID = s.nextInt();
-						//find out how to connect to mobile user using his id
-						//And then send below message.
-						outputStream.print("verify your location at LCA. \r\n");
-					}
+					
 						
 					// Send response to client
 					
@@ -81,6 +97,8 @@ public class LBSServer
 					outputStream.flush();
 					outputStream.close();
 					inputStream.close();
+					
+					
 				}
 				
 					// If the message is "kill" 
