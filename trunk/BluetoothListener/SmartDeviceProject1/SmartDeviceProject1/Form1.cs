@@ -30,7 +30,7 @@ namespace SmartDeviceProject1
         protected override void OnPaint(PaintEventArgs e)
         {
             // Create string to draw.
-            string drawString = "Hello World";
+            string drawString = "LINK - Bluetooth Listener";
 
             // Create font and brush.
             Font drawFont = new Font("Arial", 10, FontStyle.Regular);
@@ -57,7 +57,7 @@ namespace SmartDeviceProject1
         private void menuItem2_Click_1(object sender, EventArgs e)
         {
             //textBox1.Text = "Started.. \n";
-            clnt.read(textBox1);
+            clnt.read(textBox1, ServerIPAddress);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
