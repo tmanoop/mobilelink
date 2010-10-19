@@ -30,7 +30,7 @@ namespace SmartDeviceProject1
         protected override void OnPaint(PaintEventArgs e)
         {
             // Create string to draw.
-            string drawString = "Hello World";
+            string drawString = "LINK - Coupon Service";
 
             // Create font and brush.
             Font drawFont = new Font("Arial", 10, FontStyle.Regular);
@@ -66,7 +66,17 @@ namespace SmartDeviceProject1
         private void menuItem3_Click_1(object sender, EventArgs e)
         {
             textBox1.Text = "Sending Location claim to LBS.. \r\n";
-            clnt.sendToLBS(textBox1);
+            DateTime date1 = DateTime.Now;
+            DateTime date2 = DateTime.Now;
+            TimeSpan rtt1 = date2.Subtract(date1);
+            roundTripTime.Text = rtt1.ToString();
+            clnt.sendToLBS(textBox1, ServerIPAddress);
+            DateTime date3 = DateTime.Now;
+            TimeSpan rtt = date3.Subtract(date1);
+            roundTripTime.Text = rtt.ToString();
+            //clnt.recieve(textBox1);
+            // Forces the Garbage Collect to run on the system.
+            System.GC.Collect();
         }
 
     }

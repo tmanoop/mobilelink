@@ -34,6 +34,10 @@
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.ServerIPAddress = new System.Windows.Forms.TextBox();
+            this.roundTripTime = new System.Windows.Forms.TextBox();
+            this.RTT = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -59,18 +63,53 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(0, 51);
+            this.textBox1.Location = new System.Drawing.Point(0, 102);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(228, 193);
+            this.textBox1.Size = new System.Drawing.Size(228, 142);
             this.textBox1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(0, 69);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 30);
+            this.label1.Text = "ServerIP:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // ServerIPAddress
+            // 
+            this.ServerIPAddress.Location = new System.Drawing.Point(75, 69);
+            this.ServerIPAddress.Name = "ServerIPAddress";
+            this.ServerIPAddress.Size = new System.Drawing.Size(153, 30);
+            this.ServerIPAddress.TabIndex = 4;
+            this.ServerIPAddress.Text = clnt.GetMyIP();
+            // 
+            // roundTripTime
+            // 
+            this.roundTripTime.Location = new System.Drawing.Point(75, 250);
+            this.roundTripTime.Name = "roundTripTime";
+            this.roundTripTime.Size = new System.Drawing.Size(109, 30);
+            this.roundTripTime.TabIndex = 6;
+            // 
+            // RTT
+            // 
+            this.RTT.Location = new System.Drawing.Point(3, 250);
+            this.RTT.Name = "RTT";
+            this.RTT.Size = new System.Drawing.Size(69, 30);
+            this.RTT.Text = "RTT:";
+            this.RTT.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(131F, 131F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(240, 266);
+            this.ClientSize = new System.Drawing.Size(230, 256);
+            this.Controls.Add(this.RTT);
+            this.Controls.Add(this.roundTripTime);
+            this.Controls.Add(this.ServerIPAddress);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Menu = this.mainMenu1;
             this.Name = "Form1";
@@ -85,6 +124,10 @@
         private System.Windows.Forms.MenuItem menuItem2;
         private System.Windows.Forms.MenuItem menuItem3;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox ServerIPAddress;
+        private System.Windows.Forms.TextBox roundTripTime;
+        private System.Windows.Forms.Label RTT;
     }
 }
 
