@@ -38,6 +38,7 @@
             this.ServerIPAddress = new System.Windows.Forms.TextBox();
             this.roundTripTime = new System.Windows.Forms.TextBox();
             this.RTT = new System.Windows.Forms.Label();
+            this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -48,6 +49,7 @@
             // 
             this.menuItem1.MenuItems.Add(this.menuItem2);
             this.menuItem1.MenuItems.Add(this.menuItem3);
+            this.menuItem1.MenuItems.Add(this.menuItem4);
             this.menuItem1.Text = "LINK Menu";
             this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
             // 
@@ -83,7 +85,7 @@
             this.ServerIPAddress.Name = "ServerIPAddress";
             this.ServerIPAddress.Size = new System.Drawing.Size(153, 30);
             this.ServerIPAddress.TabIndex = 4;
-            this.ServerIPAddress.Text = clnt.GetMyIP();
+            this.ServerIPAddress.Text = "192.168.1.8";
             // 
             // roundTripTime
             // 
@@ -100,12 +102,17 @@
             this.RTT.Text = "RTT:";
             this.RTT.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // menuItem4
+            // 
+            this.menuItem4.Text = "Hash and Sign";
+            this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(131F, 131F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(230, 256);
+            this.ClientSize = new System.Drawing.Size(230, 266);
             this.Controls.Add(this.RTT);
             this.Controls.Add(this.roundTripTime);
             this.Controls.Add(this.ServerIPAddress);
@@ -128,6 +135,7 @@
         private System.Windows.Forms.TextBox ServerIPAddress;
         private System.Windows.Forms.TextBox roundTripTime;
         private System.Windows.Forms.Label RTT;
+        private System.Windows.Forms.MenuItem menuItem4;
     }
 }
 
