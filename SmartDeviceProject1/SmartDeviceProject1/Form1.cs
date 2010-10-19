@@ -79,5 +79,10 @@ namespace SmartDeviceProject1
             System.GC.Collect();
         }
 
+        private void menuItem4_Click(object sender, EventArgs e)
+        {
+            clnt.testRSA(textBox1);
+        }
+
     }
 }
