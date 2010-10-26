@@ -81,6 +81,11 @@ public class clnt
                     textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
                 }
 
+                String str1 = "BT message recieved.";
+                ASCIIEncoding asen = new ASCIIEncoding();
+                byte[] ba = asen.GetBytes(str1);
+                //Console.WriteLine("Transmitting.....");
+                peer.Write(ba, 0, ba.Length);
                 //StreamReader rdr = new StreamReader(peer, Encoding.ASCII);
                 //byte[] buf = new byte[1024];
                 //int bytesRead = peer.Read(buf, 0, buf.Length);
