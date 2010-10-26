@@ -21,7 +21,7 @@ import java.io.*;
 
 public class LCAServer
 {
-	String LBSIP = "192.168.1.8";
+	String LBSIP = "192.168.1.3";
 	// Server Object constructor
 	@SuppressWarnings("static-access")
 	public LCAServer()
