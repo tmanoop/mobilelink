@@ -69,7 +69,7 @@ public class LBSServer
 						//String MOBIP = "";
 						System.out.println("MOBIP: "+MOBIP);
 						//sometimes mobile client listener is not yet ready. so keeping buffer time 3secs
-						Thread.currentThread().sleep(3000);//sleep for 1000 ms
+						Thread.currentThread().sleep(6000);//sleep for 1000 ms
 						Socket mobClient = new Socket(MOBIP,8000);
 						PrintStream mobStream=new PrintStream(mobClient.getOutputStream());
 						mobStream.print(msg);
