@@ -76,8 +76,6 @@ public class clnt
             stm.Close();
             //recieve(textBox1);
             textBox1.Text = textBox1.Text + "Sending Location claim to LCA.. \r\n";
-            clnt.sendToLCA(textBox1);
-            clnt.connect(textBox1);
         }
         catch (Exception ex)
         {
@@ -91,8 +89,12 @@ public class clnt
         {
             BluetoothClient BC = new BluetoothClient();
             BluetoothAddress ADDRESS;//= new BluetoothAddress();
-
+            
+            DateTime date1 = DateTime.Now;
             BluetoothDeviceInfo[] arr = BC.DiscoverDevices();
+            DateTime date2 = DateTime.Now;
+            TimeSpan rtt1 = date2.Subtract(date1);
+            textBox1.Text = textBox1.Text + "\r\n BT Discover Time: " + rtt1.ToString() + " \r\n ";
 
             Console.WriteLine("There were " + arr.Length + " devices found:");
 
@@ -152,10 +154,20 @@ public class clnt
                         msg = System.Text.Encoding.UTF8.GetBytes(lng);
                         */
                         //msg = System.Text.Encoding.UTF8.GetBytes("My Location: Network Lab!!");
-
+                        DateTime date3 = DateTime.Now;
+                        
                         peerStream.Write(msg, 0, msg.Length);
-                        //System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
-                        //byte[] bytecmd = encoding.GetBytes(cmd);
+
+                        byte[] bb1 = new byte[10000];
+                        int k = peerStream.Read(bb1, 0, 10000);
+                        DateTime date4 = DateTime.Now;
+                        TimeSpan rtt2 = date4.Subtract(date3);
+                        textBox1.Text = textBox1.Text+"\r\n time taken to send certification request: "+rtt2.ToString()+"\r\n";
+                        for (int i = 0; i < k; i++)
+                        {
+                            textBox1.Text = textBox1.Text + Convert.ToChar(bb1[i]);
+                        }
+
                         peerStream.Close();
                         BC.Client.Close();
                     }
@@ -171,9 +183,6 @@ public class clnt
                 Console.ReadLine();
 
             }
-
-            recieve(textBox1);
-
         }
         catch (Exception ex)
         {
@@ -249,7 +258,7 @@ public class clnt
             // Create a new instance of the RSACryptoServiceProvider class 
             // and automatically create a new key-pair.
             RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
-
+            
             // Export the key information to an RSAParameters object.
             // You must pass true to export the private key for signing.
             // However, you do not need to export the private key
@@ -257,18 +266,29 @@ public class clnt
             RSAParameters Key = RSAalg.ExportParameters(true);
 
             // Hash and sign the data.
+            int dat1 = System.Environment.TickCount;
             signedData = HashAndSignBytes(originalData, Key);
-            textBox1.Text = textBox1.Text + "Signed data: " + " \r\n";
+            int dat2 = System.Environment.TickCount;
+            StringBuilder a = new StringBuilder();
+            a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
+            textBox1.Text = textBox1.Text + "Time taken for signing: " + a.ToString() + "\r\n Signed data: " + " \r\n";
+            /*
             for (int i = 0; i < signedData.Length;i++ )
             {
                 textBox1.Text = textBox1.Text + signedData[i];
             }
+            */
             textBox1.Text = textBox1.Text + " \r\n";
             // Verify the data and display the result to the 
             // console.
+            int dat3 = System.Environment.TickCount;
             if (VerifySignedHash(originalData, signedData, Key))
             {
-                textBox1.Text = textBox1.Text + "The data was verified."+ " \r\n";
+                int dat4 = System.Environment.TickCount;
+                StringBuilder b = new StringBuilder();
+                b.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat4 - dat3));
+
+                textBox1.Text = textBox1.Text + "The data was verified in time: " + b.ToString() + " \r\n";
             }
             else
             {
@@ -290,7 +310,7 @@ public class clnt
             // Create a new instance of RSACryptoServiceProvider using the 
             // key from RSAParameters.  
             RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
-
+            
             RSAalg.ImportParameters(Key);
 
             // Hash and sign the data. Pass a new instance of SHA1CryptoServiceProvider
@@ -314,7 +334,7 @@ public class clnt
             RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
 
             RSAalg.ImportParameters(Key);
-
+            
             // Verify the data using the signature.  Pass a new instance of SHA1CryptoServiceProvider
             // to specify the use of SHA1 for hashing.
             return RSAalg.VerifyData(DataToVerify, new SHA1CryptoServiceProvider(), SignedData);
