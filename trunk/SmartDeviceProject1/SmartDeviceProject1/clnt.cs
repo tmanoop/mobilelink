@@ -16,7 +16,7 @@ public class clnt
     static String serverIP = "192.168.1.10";
     //static String serverIP = "192.168.1.11";
     //static String serverIP = "128.235.67.108";
-    public static void sendToLCA(TextBox textBox1)
+    public static void sendToLCA(TextBox textBox1, ComboBox loc, ComboBox id)
     {
         try
         {
@@ -26,18 +26,28 @@ public class clnt
             //Console.WriteLine("Connected");
             //Console.Write("Enter the string to be transmitted : ");
             //                String str = Console.ReadLine();
-            String str = "My Location: Network Lab!! \n";
+            //String str = "My Location: Network Lab!! \n";
+            String str = "claim,"+id.Text.ToString().Trim()+","+loc.Text.ToString().Trim()+",999,0, \n";
             Stream stm = tcpclnt.GetStream();
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(str);
             //Console.WriteLine("Transmitting.....");
             stm.Write(ba, 0, ba.Length);
+            String trID = "";
             byte[] bb = new byte[100];
             int k = stm.Read(bb, 0, 100);
             for (int i = 0; i < k; i++)
-                textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
+            {
+                if (i < 3)
+                {
+                    trID = trID + Convert.ToChar(bb[i]);
+                    //textBox1.Text = textBox1.Text + "IP: "+Convert.ToChar(bb[i]);
+                }
+                //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
+            }
             tcpclnt.Close();
             stm.Close();
+            connect(textBox1,trID.Trim());
         }
         catch (Exception ex)
         {
@@ -59,7 +69,7 @@ public class clnt
             //textBox1.Text = textBox1.Text + " Connected..... \r\n";
             //Console.Write("Enter the string to be transmitted : ");
             //                String str = Console.ReadLine();
-            String str = "claim: My Location = 'Network Lab' \n";
+            String str = "claim: My current Location \n";
             Stream stm = tcpclnt.GetStream();
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(str);
@@ -69,13 +79,12 @@ public class clnt
             byte[] bb = new byte[100];
             int k = stm.Read(bb, 0, 100);
          
-            for (int i = 0; i < k; i++)
-                textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
+            //for (int i = 0; i < k; i++)
+                //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
             //textBox1.Text = textBox1.Text + " \r\n";
             tcpclnt.Close();
             stm.Close();
             //recieve(textBox1);
-            textBox1.Text = textBox1.Text + "Sending Location claim to LCA.. \r\n";
         }
         catch (Exception ex)
         {
@@ -83,10 +92,11 @@ public class clnt
         }
     }
 
-    public static void connect(TextBox textBox1)
+    public static void connect(TextBox textBox1, String trID)
     {
         try
         {
+            textBox1.Text = textBox1.Text + "\r\n BT Discovery started  \r\n ";
             BluetoothClient BC = new BluetoothClient();
             BluetoothAddress ADDRESS;//= new BluetoothAddress();
             
@@ -138,7 +148,7 @@ public class clnt
                         String localIP = GetMyIP();
 
                         Byte[] msg;
-                        msg = System.Text.Encoding.UTF8.GetBytes(localIP + "     ClientIP - My Location: Network Lab!!");
+                        msg = System.Text.Encoding.UTF8.GetBytes(localIP + "     ClientIP - My Location: Network Lab!!  "+trID);
 
                         Stream peerStream = BC.GetStream();
                         //string cmd = "$PASHS,RID";
@@ -163,18 +173,21 @@ public class clnt
                         DateTime date4 = DateTime.Now;
                         TimeSpan rtt2 = date4.Subtract(date3);
                         textBox1.Text = textBox1.Text+"\r\n time taken to send certification request: "+rtt2.ToString()+"\r\n";
+                        /*
                         for (int i = 0; i < k; i++)
                         {
                             textBox1.Text = textBox1.Text + Convert.ToChar(bb1[i]);
                         }
+                        */
 
                         peerStream.Close();
                         BC.Client.Close();
                     }
                     catch (Exception ex)
                     {
-                        //Console.WriteLine("Error..... " + ex.StackTrace);
-                        textBox1.Text = textBox1.Text + "Error..... " + ex.StackTrace;
+                        Console.WriteLine("Error..... " + ex.StackTrace);
+                        //textBox1.Text = textBox1.Text + "Error..... " + ex.StackTrace;
+                        textBox1.Text = textBox1.Text + "Error..... \r\n";
                     }
                     
                 }
@@ -198,7 +211,7 @@ public class clnt
             //String localIP = Dns.GetHostEntry(Dns.GetHostName()).ToString();
             String localIP = GetMyIP();
             //String localIP = ((serverSocket.getInetAddress()).getLocalHost()).getHostAddress();
-            textBox1.Text = textBox1.Text + " localIP: "+localIP;
+            textBox1.Text = textBox1.Text + " localIP: "+localIP+" waiting for LCA response.. \r\n";
             IPAddress ipAd = IPAddress.Parse(localIP); //use local m/c IP address, and use the same in the client
             /* Initializes the Listener */
             TcpListener myList = new TcpListener(ipAd, 8000);
@@ -208,7 +221,7 @@ public class clnt
             //Console.WriteLine("The local End point is :" + myList.LocalEndpoint);
             //Console.WriteLine("Waiting for a connection.....");
             Socket s = myList.AcceptSocket();
-            textBox1.Text = textBox1.Text + "Message from LBS: " + s.RemoteEndPoint + " \r\n";
+            //textBox1.Text = textBox1.Text + "Message from LBS: " + s.RemoteEndPoint + " \r\n";
             byte[] b = new byte[100];
             int k = s.Receive(b);
             //textBox1.Text = textBox1.Text + "Recieved... \r\n";

@@ -58,13 +58,13 @@ namespace SmartDeviceProject1
         {
             textBox1.Text = "Sending Location claim to LCA.. \r\n";
             int dat1 = System.Environment.TickCount;
-            clnt.sendToLCA(textBox1);
+            clnt.sendToLCA(textBox1,loc,id);
             int dat2 = System.Environment.TickCount;
             StringBuilder a = new StringBuilder();
             a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
             textBox1.Text = textBox1.Text + "RTT for TCP: "+a.ToString()+"\r\n";
 
-            clnt.connect(textBox1);
+            clnt.connect(textBox1,"0");
             
             
         }
@@ -80,8 +80,10 @@ namespace SmartDeviceProject1
             textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
             roundTripTime.Text = a.ToString();
 
-            clnt.sendToLCA(textBox1);
-            clnt.connect(textBox1);
+            textBox1.Text = textBox1.Text + "Sending Location claim to LCA.. \r\n";
+            clnt.sendToLCA(textBox1,loc,id);
+            //bluetooth call moved back to lca function to pass trID
+            //clnt.connect(textBox1);
             clnt.recieve(textBox1);
             int dat3 = System.Environment.TickCount;
             StringBuilder b = new StringBuilder();
