@@ -35,6 +35,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.ServerIPAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.id = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -65,7 +67,7 @@
             // 
             this.ServerIPAddress.Location = new System.Drawing.Point(79, 73);
             this.ServerIPAddress.Name = "ServerIPAddress";
-            this.ServerIPAddress.Size = new System.Drawing.Size(145, 30);
+            this.ServerIPAddress.Size = new System.Drawing.Size(108, 30);
             this.ServerIPAddress.TabIndex = 5;
             this.ServerIPAddress.Text = clnt.GetMyIP();
             // 
@@ -76,12 +78,43 @@
             this.label1.Size = new System.Drawing.Size(73, 30);
             this.label1.Text = "ServerIP:";
             // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(3, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(30, 30);
+            this.label2.Text = "ID:";
+            // 
+            // id
+            // 
+            this.id.Items.Add("0");
+            this.id.Items.Add("1");
+            this.id.Items.Add("2");
+            this.id.Items.Add("3");
+            this.id.Items.Add("4");
+            this.id.Items.Add("5");
+            this.id.Items.Add("6");
+            this.id.Items.Add("7");
+            this.id.Items.Add("8");
+            this.id.Items.Add("9");
+            this.id.Items.Add("10");
+            this.id.Items.Add("11");
+            this.id.Items.Add("12");
+            this.id.Items.Add("13");
+            this.id.Items.Add("14");
+            this.id.Location = new System.Drawing.Point(26, 43);
+            this.id.Name = "id";
+            this.id.Size = new System.Drawing.Size(35, 30);
+            this.id.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(131F, 131F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 266);
+            this.Controls.Add(this.id);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ServerIPAddress);
             this.Controls.Add(this.textBox1);
@@ -99,6 +132,8 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox ServerIPAddress;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox id;
     }
 }
 

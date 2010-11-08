@@ -13,28 +13,29 @@ public class clnt
     //static String claimerIP = "";
     //static String serverIP = "192.168.1.11";
     //static String serverIP = "128.235.67.108";
-    public static void sendToLCA(TextBox textBox1, String claimerIP)
+    public static void sendToLCA(TextBox textBox1, String claimerIP, String trID, ComboBox id)
     {
         try
         {
             TcpClient tcpclnt = new TcpClient();
-            textBox1.Text = textBox1.Text + " verification msg sending to LCA!! \r\n" ;
+            //textBox1.Text = textBox1.Text + " verification msg sending to LCA!! \r\n" ;
             //Console.WriteLine("Connecting.....");
             tcpclnt.Connect(IPAddress.Parse(serverIP), 8000); // use the ipaddress as in the server program
             //Console.WriteLine("Connected");
             //Console.Write("Enter the string to be transmitted : ");
             //                String str = Console.ReadLine();
-            String str = claimerIP.Trim() + " ClientIP - Claimer Location: Network Lab!! \n";
-            textBox1.Text = textBox1.Text + str;
+            //String str = claimerIP.Trim() + " ClientIP - Claimer Location: Network Lab!! \n";
+            String str = "verification," + trID + ","+id.Text.ToString().Trim()+",12,999,0,"+claimerIP.Trim()+" \n";
+            //textBox1.Text = textBox1.Text + str;
             Stream stm = tcpclnt.GetStream();
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(str);
             //Console.WriteLine("Transmitting.....");
             stm.Write(ba, 0, ba.Length);
-            byte[] bb = new byte[100];
-            int k = stm.Read(bb, 0, 100);
-            for (int i = 0; i < k; i++)
-                textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
+            byte[] bb = new byte[1000];
+            int k = stm.Read(bb, 0, 1000);
+            //for (int i = 0; i < k; i++)
+                //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
             tcpclnt.Close();
             //clean claimerIP - as it is a static variable
             //claimerIP = "";
@@ -45,7 +46,7 @@ public class clnt
         }
     }
 
-    public static void read(TextBox textBox1, TextBox ServerIPAddress)
+    public static void read(TextBox textBox1, TextBox ServerIPAddress, ComboBox id)
     {
         serverIP = ServerIPAddress.Text.ToString().Trim();
         //Guid gd = Guid.NewGuid();
@@ -69,6 +70,7 @@ public class clnt
                 Stream peer = BC.GetStream();
                 //MessageBox.Show("Get reader.");
                 String claimerIP = "";
+                String trID = "";
                 byte[] bb = new byte[10000];
                 int k = peer.Read(bb, 0, 10000);
                 for (int i = 0; i < k; i++)
@@ -78,7 +80,9 @@ public class clnt
                         claimerIP = claimerIP + Convert.ToChar(bb[i]);
                         //textBox1.Text = textBox1.Text + "IP: "+Convert.ToChar(bb[i]);
                     }
-                    textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
+                    if(i > k-4)
+                        trID = trID + Convert.ToChar(bb[i]);
+                    //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
                 }
 
                 String str1 = "BT message recieved.";
@@ -97,14 +101,14 @@ public class clnt
                   //  textBox1.Text = textBox1.Text + "no message... \r\n";
                 //else
                   //  textBox1.Text = textBox1.Text + " Message recieved: \r\n" + " " + s + "\r\n";
-                sendToLCA(textBox1, claimerIP);
+                sendToLCA(textBox1, claimerIP.Trim(), trID.Trim(),id);
                 //BL.Stop();
                 peer.Close();
             }
             catch (Exception ex)
             {
-                textBox1.Text = textBox1.Text + "Error..... " + ex.StackTrace;
-                //Console.WriteLine("Error..... " + ex.StackTrace);
+                //textBox1.Text = textBox1.Text + "Error..... " + ex.StackTrace;
+                Console.WriteLine("Error..... " + ex.StackTrace);
             }
         }
     }
