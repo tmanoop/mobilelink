@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 
-public class transaction
+public class Transaction
 {
 	int transaction_id;
-	ArrayList<User> obj = new ArrayList<User>();
-	int claim_status;    //Status of claim
-	int time;
-	
-    ArrayList<transaction> trans = new ArrayList<transaction>();  
- }
+	User c;
+	int claim_status;    //Status of claim 
+	Transaction(int transaction_id){
+		this.transaction_id = transaction_id;
+	}
+}
