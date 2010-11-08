@@ -29,7 +29,7 @@ public class LCAServer
 		int size = 10;
 		ArrayList<User> mobileUsers = new ArrayList<User>();
 		int[][] M = new int[size][size];
-		LCA lca = new LCA(mobileUsers,M);
+		LCA lca = new LCA(size);
 		try
 		{
 			int clientNumber = 0;

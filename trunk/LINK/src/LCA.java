@@ -1,38 +1,44 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class LCA {
+	private static final double INC = 0.1;
 	private static final double DEC = 0.5;
 	private static final double INDtr = 0.3;
-	private static final int AVGtr = 0;
-	private static final double INC = 0;
+	private static final double AVGtr = 0.1;
+	
 	int reject = -1;
 	int accept = 1;
 	int ignore = 0;
-	int VRFcnt = 0;
-	int POOR = 0; // TODO to be assigned a proper value
-	int GOOD = 1;
-	// double Tc = 0;
-	// double Tvi = 0;
-	// double Inc = 0.1;
-	boolean secVer;
 
+	int POOR = 0; 
+	int GOOD = 1;
+	
+	ArrayList<Transaction> transactions;
 	ArrayList<User> mobileUsers;
 	int[][] M;
 
-	/*
-	 * public LCA() //constructor {
-	 * 
-	 * }
-	 */
-	public LCA(ArrayList<User> mobUsers, int[][] Matrix) {
-		mobileUsers = mobUsers;
-		M = Matrix;
+	// default constructor 
+	public LCA() {
+		
 	}
 
-	public int decisionProcess(User c) {
+	public LCA(int size) {
+		transactions = new ArrayList<Transaction>();
+		mobileUsers = new ArrayList<User>(size);
+		M = new int[size][size];
+		for(int i=0;i<M.length;i++){
+			User u = new User();
+			u.trustScore = 0.5;
+			u.serviceID = 999;
+			u.id = i;
+			mobileUsers.add(u);
+			for(int j=0;j<M.length;j++){
+				M[i][j]=0;
+			}
+		}
+	}
+
+	synchronized public int decisionProcess(User c) {
 		// below is the list of verifiers for the claimer c.
 		// Get the list of verifiers available for this claimer c and also for
 		// this claim ID.
@@ -40,26 +46,24 @@ public class LCA {
 
 		// check the spatio-tempo corelation
 		if (!SpatioTempCorrelation(c)) {
-			User usr1 = mobileUsers.get(c.id);
-			usr1.trustScore = usr1.trustScore * DEC;
-			return reject;
+			return reject(c);
 		}
 
-		VRFcnt++;
-
 		// check has nieghbors
-		if (!V.isEmpty()) {
+		if (hasNeighbors(c)) {
 			// Get number of verifiers
-			for (int i = 0; i <= V.size(); i++) {
+			for (int i = 0; i < V.size(); i++) {
 				// check the spatio-tempo corelation
 				User vrfr = V.get(i);
 				if (!SpatioTempCorrelation(vrfr)) {
 					User usr = mobileUsers.get(vrfr.id);
 					usr.trustScore = usr.trustScore * DEC;
+					usr.rjctCount++;
 					V.remove(vrfr);
-					return reject;
 				}
-				double Wvi = getUpdatedWeightScore(V.get(i), c);
+				
+				double Wvi = getUpdatedWeightScore(vrfr, c);
+				
 				// Individual threshold to eliminate the low-scored verifiers
 				if (Wvi <= INDtr) {
 					V.remove(vrfr);
@@ -68,93 +72,76 @@ public class LCA {
 			// check if the V is empty
 			if (!V.isEmpty()) {
 				// call check collusion
-				if (checkCollusion(V, c) == 1) {
-					return (reject);
+				if (checkCollusion(V, c) != 1) {
+					return reject;
 				}
+				
+				Averages avgs = getTrustScoreAvg(V,c);
+				// read and assign values to variables
 				// Ysum: number of verifiers that agrees with claimer
 				// Nsum: number of verifiers that disagrees with claimer
-				int absAVGDiff = 0;
-				int Nsum = 0;
-				int Ysum = 0;
-				// averages = getTrustScore(V,c);
-				//read and assign values to above variables
-
+				double absAVGDiff = avgs.absAVGDiff;
+				double Nsum = avgs.Nsum;
+				double Ysum = avgs.Ysum;
+				
 				if (absAVGDiff >= AVGtr) {
-
 					if (Ysum >= Nsum) {
-						// Tc = Tc + INC;
-						mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore + INC;
-						//usr1.trustScore = usr1.trustScore + INC;
-						return accept;
+						return accept(c);
 					} else {
-						// Tc = Tc + Dec;
-						mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore * DEC;
-						return reject;
+						return reject(c);
 					}
 				} else {
-					return accept;
-					/*
-					if (!trend(c)) {
-						// Tc = Tc * Dec;
-						mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore * DEC;
-						return reject;
-					} else if (!verifyScoreTrends(V)) {
-						if (c.trustScore <= INDtr)
+					if(trend(c) == POOR){
+						return reject(c);
+					} else if(verifyScoreTrends(V, c) == POOR){
+						if(mobileUsers.get(c.id).trustScore <= INDtr){
 							return ignore;
-						else
-							// Tc = Tc - INC;
-							mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore - INC;
-						return accept;
-					} else if (VRFcnt == 2) {
-						return ignore; // 2nd level claim is ignored
-					} else { //comment this else and test later
-						
-						int[] SecVer = null;
-						for (int i = 0; i <= V.size(); i++) // TODO Vn to be
-															// defined
-						{
-							// SecVer = null;
-							// SecVer[i] = decisionProcess(Vi,Lvi); //Recursive
-							// call
-						}
-						if ((Majority(SecVer) == ignore)
-								|| (Majority(SecVer) == reject)) {
-							// Tc = Tc + INC;
-							//usr1.trustScore = usr1.trustScore + INC;
-							return accept;
 						} else {
-							// Tc = Tc * Dec;
-							//usr1.trustScore = usr1.trustScore * Dec;
-							return reject;
+							User usr = mobileUsers.get(c.id);
+							usr.trustScore = usr.trustScore - INC;
+							usr.rjctCount++;
+							return accept;
 						}
-						
-					}*/
+					}
 				}
 			}
 		}
-		
-		//if(VRFcnt == 2) finish this block
 
-		return POOR;
+		if(trend(c) == 0){
+			return reject(c);
+		} else if(mobileUsers.get(c.id).trustScore <= INDtr){
+			return ignore;
+		}else{
+			User usr = mobileUsers.get(c.id);
+			usr.trustScore = usr.trustScore - INC;
+			usr.rjctCount++;
+			return accept;
+		}
 	}
 
-	private int Majority(int[] secVer2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int verifyScoreTrends(ArrayList<User> v, User c) {
+		float good_cnt = 0;
+		for(int i=0;i<v.size();i++) {
+			int tr = trend(v.get(i));
+			if(tr == 1 || tr == 2) {
+				good_cnt++;
+			} else if(tr == 0)  {
+				mobileUsers.get(c.id).trustScore = mobileUsers.get(c.id).trustScore * DEC;
+				if(mobileUsers.get(c.id).trustScore < 0)
+					mobileUsers.get(c.id).trustScore = 0;
+				mobileUsers.get(c.id).rjctCount = mobileUsers.get(c.id).rjctCount + 1;
+			}
+		} 
+		float half = v.size()/2;
 
-	private boolean verifyScoreTrends(ArrayList<User> v) {
-		// TODO Auto-generated method stub
-		// calling trend(c) for each verifier
-		
-		if (trend(v.get(0)))
-			return true;
+		if(good_cnt >= half)
+			return 1;
 		else
-			return false;
+			return 0;
 	}
 
 	public boolean SecLevClaim(User C) {
-		return secVer;
+		return true;
 		/*
 		 * if(VRFcnt == 2) { return ignore; //2nd level claim is ignored } else
 		 * if(trend(c) == POOR) { Tc = Tc * Dec; usr1.trustScore =
@@ -173,46 +160,68 @@ public class LCA {
 
 	public boolean SpatioTempCorrelation(User c) {
 
-		/*
-		 * int Pre_Loc = c.prevLocation; //get previous locaton of this calimer
-		 * ?how to get x1 and x2 long time1 = c.prevTime;
-		 * System.out.println("time for previous location = " + time1);
-		 * 
-		 * int Curr_Loc = c.location; long time2 = c.time;
-		 * System.out.println("time for current location = " + time2);
-		 * 
-		 * int Diff_Dist = (Curr_Loc - Pre_Loc); long Diff_Time = (time2-time1);
-		 * 
-		 * int Avg_Speed = 20; long Avg_Dist = (Avg_Speed * Diff_Time);
-		 * 
-		 * if(Diff_Dist > Avg_Dist) return(false); else
-		 */
-		return (true);
+		 boolean sptCorr = true;
+		 int Pre_Loc = mobileUsers.get(c.id).location; //get previous locaton of this calimer
+		 //how to get x1 and x2 
+		 long time1 = mobileUsers.get(c.id).time;
+		 //System.out.println("time for previous location = " + time1);
+		  
+		 int Curr_Loc = c.location; 
+		 long time2 = c.time;
+		 //System.out.println("time for current location = " + time2);
+		  
+		 if(Pre_Loc != 0){
+			 //still working on mapping the building distances 
+			 int Diff_Dist = (Curr_Loc - Pre_Loc)/100; 
+			 long Diff_Time = (time2-time1);
+			 int diff_hrs = (int)((Diff_Time/3600) % 24);;
+			 int Avg_Speed = 2; 
+			 int Avg_Dist = (Avg_Speed * diff_hrs);
+			  
+			 if(Diff_Dist > Avg_Dist) 
+				 sptCorr = false;  
+			 else
+				 sptCorr = true;
+		 }else{
+			 sptCorr = true;
+		 }
+		 setCurrentLocation(c);
+		 //temporarily always return true
+		 return true;
 	}
 
 	// to find the trustscore of the user
-	public double getTrustScore(ArrayList<User> V, User c) {
-		return POOR;
-	}
+	// public double getTrustScore(ArrayList<User> V, User c) {
+	// return POOR;
+	// }
 
-	public double getTrustScoreAvg(ArrayList<User> V, User c) {
+	public Averages getTrustScoreAvg(ArrayList<User> V, User c) {
 
-		String Ltr;
-		long Y, Yavg, ycnt;
-		long N, Navg, ncnt = 0;
-
+		double Y=0;
+		double N=0;
+		double indThrld = 0.3;
+		Averages avg = new Averages();
+		
 		for (int i = 0; i < V.size(); i++) {
-
-			// int Wvi = getUpdatedWeightScore(V.get(i),c);
-			/*
-			 * if ((LC - Lvi) > Ltr) { Y = Y + Wvi; ycnt++; } else { VN.add(vi)
-			 * N = N + Wvi; ncnt++; } end if end for(absAVGDiff = (Y * ycnt - N
-			 * * ncnt)/V.size()) { Yavg = Y/ycnt; Navg = N/ncnt;
-			 * return(absAVGDiff, Yavg, Navg); } }
-			 */
-
+			User vrfr = V.get(i);
+			double Wvi = getUpdatedWeightScore(vrfr,c);
+			//finally update verifier Matrix once in each claim for each verifier
+			M[vrfr.id][c.id]++;
+			if(mobileUsers.get(vrfr.id).trustScore > indThrld){
+				if (c.location == vrfr.location) { 
+					Y = Y + Wvi; 
+				}else { 
+					N = N + Wvi;  
+				} 
+			}
 		}
-		return ncnt;
+		if(Y > N)
+			avg.absAVGDiff = (Y - N)/V.size();
+		else
+			avg.absAVGDiff = (N - Y)/V.size();
+		avg.Ysum = Y;
+		avg.Nsum = N;
+		return avg;
 
 	}
 
@@ -221,59 +230,71 @@ public class LCA {
 		double vWeightedScore = 0.0;
 		int w = M[v.id][c.id];
 		// vWeightedScore = Tv/log2(w);
-		vWeightedScore = v.trustScore/log2(w);
-		M[v.id][c.id]++;
+		if(w>1)
+			vWeightedScore = mobileUsers.get(v.id).trustScore / log2(w);
+		else
+			vWeightedScore = mobileUsers.get(v.id).trustScore;
+		
 		return vWeightedScore;
 	}
 
 	// to find the trend score of the user
-	public boolean trend(User c) {
+	public int trend(User c) {
 		// get below details of from mobileUsers arraylist
-		int NumClc = c.totalCount;
-		int RejClc = c.rjctCount;
-		double trendScores = (RejClc / NumClc);
-		if (trendScores > 0.1)
-			return false;
-		else
-			return true;
+		int totClc = mobileUsers.get(c.id).totalCount;
+		int rejClc = mobileUsers.get(c.id).rjctCount;
+		if(totClc >= 10){
+			double perc = (double)rejClc/totClc;
+			perc = perc*100;
+			if(perc >= 10) 
+				return 0; // reject
+			else
+				return 1;
+		} else 
+			return 2; //ignore
 	}
 
 	public int checkCollusion(ArrayList<User> V, User c) {
-		int m = 0;
-		int k = 0;
 		double B = 0.3;
-		double RejClc = 0;
-		double NumClc = 0;
-		int Wrst = 0;
-		int Wmax;
 		// Wmax set to B i.e. 30%
+		int Wmax = (int) (B * mobileUsers.get(c.id).totalCount);
+		int Wrst = 1;
+		int k = 0;
+		int m = 0;
 		double A = 0.1;
 		// Total number of claims made by a claimer
-		Wmax = (int) (B * NumClc);
-		for (int i = 0; i < M.length; i++) { // TODO where to define matrix?
+		
+		
+		if(mobileUsers.get(c.id).totalCount < 10) 
+			return 1;
+		for (int i = 0; i < M.length; i++) { 
 			if (M[i][c.id] >= Wmax)
 				k++;
-
+			if(M[i][c.id] > 0)
+				m++;
 		}
 		// A set to 10%
-		if (k / m >= A) {
-			// Tc = Tc * Dec;
-			for (int i = 0; i > M.length; i++) // matrix need to be defined
+		if (m!=0 && (k / m) > A) {
+			boolean pun = false;
+			for (int i = 0; i > M.length; i++) 
 			{
-				if ((M[i][c.id] >= Wmax)) // M[i][c] to be defined ||(i.punished
-											// == false)
-				{
-					//for loop for V.arraylist :- 
-						//if check whether the i == V.ID 
-							// double Ti = Ti * DEC;
-							// boolean i.punished = true; //i.punished???
-					
-					//if check i.punished == false
-						// double Ti = Ti * DEC;
-						// boolean i.punished = true; //i.punished???
+				if ((M[i][c.id] >= Wmax)){
+					// for loop for V.arraylist :-
+					for(int z=0; z<c.V.size(); z++){
+						if(i == c.V.get(z).id)
+							pun = true;
+					}
+					if(mobileUsers.get(i).punished == false){
+						pun = true;
+					}
+					if(pun == true){
+						mobileUsers.get(i).trustScore = mobileUsers.get(i).trustScore * DEC;
+						mobileUsers.get(i).rjctCount++;
+						mobileUsers.get(i).punished = true;
+					}
 				}
 			}
-			return 0; //bad
+			return 0; // bad
 		}
 
 		else {
@@ -281,13 +302,33 @@ public class LCA {
 				if (M[V.get(i).id][c.id] >= Wmax)
 					M[V.get(i).id][c.id] = Wrst; // Wrst is reset value
 			}
-			return 1; //good
+			return 1; // good
 		}
-	} // Decision function closes
-	
-	public static double log2(double num)
-	{
-		return (Math.log(num)/Math.log(2));
 	} 
+
+	public double log2(double num) {
+		return (Math.log(num) / Math.log(2));
+	}
+	
+	public void setCurrentLocation(User c){
+		//this latest location used later to verify the spatio-temp correlation
+		mobileUsers.get(c.id).location = c.location;
+		mobileUsers.get(c.id).time = c.time;
+	}
+	
+	public int reject(User c){
+		User usr = mobileUsers.get(c.id);
+		usr.trustScore = usr.trustScore * DEC;
+		usr.rjctCount++;
+		
+		return reject;
+	}
+	
+	public int accept(User c){
+		User usr = mobileUsers.get(c.id);
+		usr.trustScore = usr.trustScore + INC;
+		
+		return accept;
+	}
 } // class closes
 
