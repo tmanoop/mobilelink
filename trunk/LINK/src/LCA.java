@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LCA {
 	private static final double INC = 0.1;
@@ -13,7 +14,8 @@ public class LCA {
 	int POOR = 0; 
 	int GOOD = 1;
 	
-	ArrayList<Transaction> transactions;
+	int tr_id = 0;
+	HashMap<Integer,Transaction> transactions;
 	ArrayList<User> mobileUsers;
 	int[][] M;
 
@@ -23,7 +25,7 @@ public class LCA {
 	}
 
 	public LCA(int size) {
-		transactions = new ArrayList<Transaction>();
+		transactions = new HashMap<Integer,Transaction>();
 		mobileUsers = new ArrayList<User>(size);
 		M = new int[size][size];
 		for(int i=0;i<M.length;i++){
