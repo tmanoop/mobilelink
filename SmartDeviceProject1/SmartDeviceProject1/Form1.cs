@@ -58,37 +58,43 @@ namespace SmartDeviceProject1
         {
             textBox1.Text = "Sending Location claim to LCA.. \r\n";
             int dat1 = System.Environment.TickCount;
-            clnt.sendToLCA(textBox1,loc,id);
+            clnt.sendToLCA(textBox1,loc,id,0);
             int dat2 = System.Environment.TickCount;
             StringBuilder a = new StringBuilder();
             a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
             textBox1.Text = textBox1.Text + "RTT for TCP: "+a.ToString()+"\r\n";
 
-            clnt.connect(textBox1,"0");
+            clnt.connect(textBox1, loc, id);
             
             
         }
 
         private void menuItem3_Click_1(object sender, EventArgs e)
         {
-            textBox1.Text = "Sending Location claim to LBS.. \r\n";
+            //textBox1.Text = "Sending Location claim to LBS.. \r\n";
             int dat1 = System.Environment.TickCount;
             clnt.sendToLBS(textBox1, ServerIPAddress);
             int dat2 = System.Environment.TickCount;
             StringBuilder a = new StringBuilder();
             a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
-            textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
-            roundTripTime.Text = a.ToString();
+            //textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
+            //roundTripTime.Text = a.ToString();
+            String rttTCP = a.ToString();
 
-            textBox1.Text = textBox1.Text + "Sending Location claim to LCA.. \r\n";
-            clnt.sendToLCA(textBox1,loc,id);
+
+            //textBox1.Text = textBox1.Text + "Sending Location claim to LCA.. \r\n";
+            //clnt.sendToLCA(textBox1,loc,id);
             //bluetooth call moved back to lca function to pass trID
-            //clnt.connect(textBox1);
-            clnt.recieve(textBox1);
+            String rttBLTH = clnt.connect(textBox1, loc, id);
+            String lcaResponse = clnt.recieve(textBox1);
             int dat3 = System.Environment.TickCount;
             StringBuilder b = new StringBuilder();
             b.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat3 - dat1));
             roundTripTime.Text = b.ToString();
+            textBox1.Text = "LCA Response: " + lcaResponse + "\r\n";
+            textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
+            textBox1.Text = textBox1.Text + "BluetoothDiscovery: " + rttBLTH + "\r\n";
+            
             // Forces the Garbage Collect to run on the system.
             System.GC.Collect();
         }
