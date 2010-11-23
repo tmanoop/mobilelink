@@ -32,8 +32,8 @@ public class clnt
             byte[] ba = asen.GetBytes(str);
             //Console.WriteLine("Transmitting.....");
             stm.Write(ba, 0, ba.Length);
-            byte[] bb = new byte[1000];
-            int k = stm.Read(bb, 0, 1000);
+            //byte[] bb = new byte[1000];
+            //int k = stm.Read(bb, 0, 1000);
             //for (int i = 0; i < k; i++)
                 //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
             tcpclnt.Close();
@@ -61,12 +61,12 @@ public class clnt
 
                 BL.Start();
                 //MessageBox.Show("Accept Client.");
-                textBox1.Text = textBox1.Text + "Listening for client.. \r\n";
+                textBox1.Text = "Listening for client.. \r\n";
                 BluetoothClient BC = BL.AcceptBluetoothClient();
                 //TextBox textBox1;
                 //if (BC.RemoteMachineName.Equals(""))
                 //  continue;
-                textBox1.Text = textBox1.Text + "'" + BC.RemoteMachineName + "' Get stream... \r\n";
+                //textBox1.Text = textBox1.Text + "'" + BC.RemoteMachineName + "' Get stream... \r\n";
                 Stream peer = BC.GetStream();
                 //MessageBox.Show("Get reader.");
                 String claimerIP = "";
@@ -84,12 +84,12 @@ public class clnt
                         trID = trID + Convert.ToChar(bb[i]);
                     //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
                 }
-
-                String str1 = "BT message recieved.";
-                ASCIIEncoding asen = new ASCIIEncoding();
-                byte[] ba = asen.GetBytes(str1);
+                //textBox1.Text = textBox1.Text + "Processing Tr_ID:"+trID;
+                //String str1 = "BT message recieved.";
+                //ASCIIEncoding asen = new ASCIIEncoding();
+                //byte[] ba = asen.GetBytes(str1);
                 //Console.WriteLine("Transmitting.....");
-                peer.Write(ba, 0, ba.Length);
+                //peer.Write(ba, 0, ba.Length);
                 //StreamReader rdr = new StreamReader(peer, Encoding.ASCII);
                 //byte[] buf = new byte[1024];
                 //int bytesRead = peer.Read(buf, 0, buf.Length);
