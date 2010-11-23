@@ -1,7 +1,12 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 
 public class LCAMultiThreadedServer implements Runnable{
 
@@ -37,10 +42,82 @@ public class LCAMultiThreadedServer implements Runnable{
                 throw new RuntimeException(
                     "Error accepting client connection", e);
             }
-            new Thread(
-                new LCAWorkerRunnable(
-                    clientSocket, this.lca, LBSIP)
-            ).start();
+            
+            try {
+				// Create an input stream to read a message from the Client Socket
+				BufferedReader inputStream= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+				
+				// Create an output stream to send response to the Client Socket
+				PrintStream outputStream = new PrintStream(clientSocket.getOutputStream());
+				
+				String clientsMessage = inputStream.readLine();
+				//check claim/verification
+				
+				//if claim create LCAWorkerRunnable object
+				if(clientsMessage.contains("claim")){
+					User c = new User();
+					//set user info in this claimer instance
+					//claimer msg example of clientsMessage = claim: 01,12,999,0
+					Scanner s = new Scanner(clientsMessage).useDelimiter(",");
+					s.next();
+					c.id = s.nextInt();
+					c.location = s.nextInt();
+					c.serviceID = s.nextInt();
+					c.time = s.nextInt();
+					
+					c.setMOBIP(clientSocket.getInetAddress().toString());
+					
+					int tr_id = lca.tr_id++;
+					Transaction tr = new Transaction(tr_id);
+					tr.verifiersCount = s.nextInt();
+					tr.c = c;
+					//read data and store in lca
+					//create transaction and store object in map 
+					lca.transactions.put(tr_id,tr);
+					lca.mobileUsers.get(c.id).totalCount++;
+					//write tr_id to claimer
+					outputStream.print(tr_id+"  tr_id. LCA recieved claim!! \n");
+					outputStream.flush();
+					//new thread on LCAWorkerRunnable object and start it
+					new Thread(
+					        new LCAWorkerRunnable(
+					            tr_id, this.lca, LBSIP)
+					    ).start();
+				}
+				
+				//if verification read data and notify
+				//handle verifications
+				if(clientsMessage.contains("verification")){
+					//verifier msg example of clientsMessage = verification: claimer id,01,12,999,0
+					Scanner s = new Scanner(clientsMessage).useDelimiter(",");
+					s.next();
+					int tr_id = s.nextInt();
+					Transaction parent = lca.transactions.get(tr_id);
+					synchronized(parent)
+					{
+						User claimer = lca.transactions.get(tr_id).c;
+						//set user info in this claimer instance
+						//claimer msg example of clientsMessage = 01,12,999,0
+						User vrfr = new User();
+						
+						vrfr.id = s.nextInt();
+						vrfr.location = s.nextInt();
+						vrfr.serviceID = s.nextInt();
+						vrfr.time = s.nextInt();
+						claimer.setMOBIP(s.next());				
+						claimer.V.add(vrfr);
+						
+						parent.notify();
+						System.out.println(tr_id+"  tr_id. verifierID:"+vrfr.id+" at "+new Date());
+					}
+				}
+				inputStream.close();
+				outputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
         }
         System.out.println("Server Stopped.") ;
     }

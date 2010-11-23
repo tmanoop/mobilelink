@@ -14,6 +14,14 @@ public class User {
 	boolean punished;
 	
 	String MOBIP;
+	public String getMOBIP() {
+		return MOBIP;
+	}
+	public void setMOBIP(String mOBIP) {
+		if(mOBIP.contains("/"))
+			mOBIP = mOBIP.substring(1, mOBIP.length());
+		MOBIP = mOBIP;
+	}
 	User() {
 		V = new ArrayList<User>();
 	}

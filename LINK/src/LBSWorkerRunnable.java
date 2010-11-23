@@ -35,7 +35,7 @@ public class LBSWorkerRunnable implements Runnable{
             //Thread.currentThread().sleep(9000);//sleep for 1000 ms
             output.close();
             input.close();
-            System.out.println("Request processed: " + time);
+            System.out.println("Request processed: " + new Date());
         } catch (Exception e) {
             //report exception somewhere.
             e.printStackTrace();
@@ -63,12 +63,25 @@ public class LBSWorkerRunnable implements Runnable{
 					msg = "Coupon sent to claimer!! \r\n";
 				else
 					msg = "Coupon not available for claimer!! \r\n";
-				String MOBIP = clientsMessage.substring(1, clientsMessage.indexOf("ClientIP") - 1).trim();
+				String MOBIP = clientsMessage.substring(0, clientsMessage.indexOf("ClientIP") - 1).trim();
 				//String MOBIP = "";
 				System.out.println("MOBIP: "+MOBIP);
 				//sometimes mobile client listener is not yet ready. so keeping buffer time 3secs
 				//Thread.currentThread().sleep(6000);//sleep for 1000 ms
-				Socket mobClient = new Socket(MOBIP,8000);
+				int retry = 0;
+				Socket mobClient = null;
+				while(retry<4){
+					try {
+						mobClient = new Socket(MOBIP,8000);
+						break;
+					} catch (Exception e) {
+						if(retry==3)
+							break;
+						System.out.println("claimer busy!!");
+						//Thread.currentThread().sleep(2000);
+						retry++;
+					}
+				}
 				PrintStream mobStream=new PrintStream(mobClient.getOutputStream());
 				mobStream.print(msg);
 				mobStream.flush();
