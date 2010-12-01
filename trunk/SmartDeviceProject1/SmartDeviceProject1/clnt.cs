@@ -264,7 +264,7 @@ public class clnt
         return "";
     }
 
-    public static void testRSA(TextBox textBox1)
+    public static void testRSA1(TextBox textBox1)
     {
         try
         {
@@ -276,11 +276,11 @@ public class clnt
             StreamWriter SW;
             SW = File.CreateText("File.txt");
             long i = 0;
-            while (i++ < 10000)
+           /* while (i++ < 10000)
             {
                 //textBox1.Text = "i=" + i++;
                 dataString = dataString + "God is ... God is ...God is ... God is ...God is ... God is ...God is ... God is ... God is ... God is ... God is ...God is ... God is ...God is ... God is ...God is ... God is ...God is ... God is ...God is ... God is ...God is ... God is ...God is ... God is ...God is ... God is ...\r\n";
-            }
+            }*/
             //SW.WriteLine("This is second line");
             SW.Close();
 
@@ -317,11 +317,13 @@ public class clnt
             RSAParameters Key = RSAalg.ExportParameters(true);
 
             // Hash and sign the data.
+            //Stopwatch stopWatch = Stopwatch.StartNew();
             int dat1 = System.Environment.TickCount;
-            signedData = HashAndSignBytes(originalData, Key);
+            //signedData = HashAndSignBytes(originalData, Key);
             int dat2 = System.Environment.TickCount;
+            int dat4 = System.Environment.TickCount;
             StringBuilder a = new StringBuilder();
-            a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
+            a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat4 - dat1));
             textBox1.Text = textBox1.Text + "originalData Size: " + originalData.Length + ", Time taken for signing: " + a.ToString() + "\r\n Signed data: " + " \r\n";
             /*
             for (int i = 0; i < signedData.Length;i++ )
@@ -331,6 +333,107 @@ public class clnt
             */
             //textBox1.Text = textBox1.Text + " \r\n";
             MessageBox.Show("ok");
+            // Verify the data and display the result to the 
+            // console.
+            int dat3 = System.Environment.TickCount;
+            /*if (VerifySignedHash(originalData, signedData, Key))
+            {
+                int dat4 = System.Environment.TickCount;
+                StringBuilder b = new StringBuilder();
+                b.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat4 - dat3));
+
+                textBox1.Text = textBox1.Text + "The data was verified in time: " + b.ToString() + " \r\n";
+            }
+            else
+            {
+                textBox1.Text = textBox1.Text + "The data does not match the signature." + " \r\n";
+            }*/
+
+        }
+        catch (ArgumentNullException)
+        {
+            Console.WriteLine("The data was not signed or verified");
+
+        }
+    }
+
+    public static void sendToServer(TextBox textBox1, TextBox ServerIPAddress, byte[] m, byte[] exp, byte[] s)
+    {
+        try
+        {
+            serverIP = ServerIPAddress.Text.ToString().Trim();
+            //textBox1.Text = textBox1.Text + "Sending Location claim to LCA.. \r\n";
+            TcpClient tcpclnt = new TcpClient();
+            //Console.WriteLine("Connecting.....");
+            tcpclnt.Connect(IPAddress.Parse(serverIP), 8000); // use the ipaddress as in the server program
+
+            Stream stm = tcpclnt.GetStream();
+
+            stm.Write(m, 0, m.Length);
+            ASCIIEncoding asen = new ASCIIEncoding();
+            byte[] ba = asen.GetBytes("\n");
+            stm.Write(ba, 0, ba.Length);
+
+            stm.Write(exp, 0, exp.Length);
+            stm.Write(ba, 0, ba.Length);
+
+            stm.Write(s, 0, s.Length);
+            stm.Write(ba, 0, ba.Length);
+
+            tcpclnt.Close();
+            stm.Close();
+            //connect(textBox1,trID.Trim());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error..... " + ex.StackTrace);
+        }
+    }
+
+    public static void testRSA(TextBox textBox1, TextBox ServerIPAddress)
+    {
+        try
+        {
+            // Create a UnicodeEncoder to convert between byte array and string.
+            ASCIIEncoding ByteConverter = new ASCIIEncoding();
+            
+            string dataString = "claim: 01,12,999,0";
+
+            
+            // Create byte arrays to hold original, encrypted, and decrypted data.
+            byte[] originalData = ByteConverter.GetBytes(dataString);
+            byte[] signedData;
+
+            // Create a new instance of the RSACryptoServiceProvider class 
+            // and automatically create a new key-pair.
+            RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider(1024);
+
+            // Export the key information to an RSAParameters object.
+            // You must pass true to export the private key for signing.
+            // However, you do not need to export the private key
+            // for verification.
+            RSAParameters Key = RSAalg.ExportParameters(true);
+            textBox1.Text = textBox1.Text + "Modulus: " + Key.Modulus.Length;
+            textBox1.Text = textBox1.Text + "Exp: " + Key.Exponent.Length;
+
+            // Hash and sign the data.
+            //Stopwatch stopWatch = Stopwatch.StartNew();
+            int dat1 = System.Environment.TickCount;
+            signedData = HashAndSignBytes(originalData, Key);
+            int dat2 = System.Environment.TickCount;
+            StringBuilder a = new StringBuilder();
+            a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
+            textBox1.Text = textBox1.Text + "originalData Size: " + originalData.Length + ", Time taken for signing: " + a.ToString() + "\r\n Signed data: " + " \r\n";
+
+            sendToServer(textBox1, ServerIPAddress, Key.Modulus, Key.Exponent,signedData);
+            /*
+            for (int i = 0; i < signedData.Length;i++ )
+            {
+                textBox1.Text = textBox1.Text + signedData[i];
+            }
+            */
+            //textBox1.Text = textBox1.Text + " \r\n";
+            
             // Verify the data and display the result to the 
             // console.
             int dat3 = System.Environment.TickCount;
@@ -348,10 +451,10 @@ public class clnt
             }
 
         }
-        catch (ArgumentNullException)
+        catch (Exception)
         {
-            Console.WriteLine("The data was not signed or verified");
-
+            //Console.WriteLine("The data was not signed or verified");
+            textBox1.Text = textBox1.Text + "Error!!";
         }
     }
 

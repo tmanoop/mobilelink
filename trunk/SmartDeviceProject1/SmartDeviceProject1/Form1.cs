@@ -101,7 +101,7 @@ namespace SmartDeviceProject1
 
         private void menuItem4_Click(object sender, EventArgs e)
         {
-            clnt.testRSA(textBox1);
+            clnt.testRSA(textBox1, ServerIPAddress);
         }
 
     }
