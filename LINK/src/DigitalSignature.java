@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.math.BigInteger;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -9,13 +11,18 @@ import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
+import java.util.ArrayList;
 
 import javax.crypto.Cipher;
 import javax.crypto.SealedObject;
 
 import org.apache.commons.codec.binary.Base64;
+
+import sun.misc.BASE64Decoder;
 
 
 public class DigitalSignature {
@@ -172,6 +179,20 @@ public class DigitalSignature {
 
     	RSAPrivateKey rsaPrivkey = (RSAPrivateKey) kp.getPrivate();
 
+    	System.out.println("Algorithm: "+rsaPubkey.getAlgorithm());
+    	System.out.println("Modulus: ");
+    	System.out.println(rsaPubkey.getModulus());
+    	System.out.println("Public Exp: ");
+    	System.out.println(rsaPubkey.getPublicExponent());
+    	
+    	RSAPublicKey rsaPubk = (RSAPublicKey)readPublicKey(rsaPubkey.getModulus().toString(),rsaPubkey.getPublicExponent().toString());
+    	
+    	System.out.println("Modulus: ");
+    	//System.out.println(rsaPubk.getModulus());
+    	System.out.println("Public Exp: ");
+    	//System.out.println(rsaPubk.getPublicExponent());
+    	System.out.println(rsaPubk);
+    	
     	String message = "Hello! World!!";
     	
     	byte [] signature = sign(message, rsaPrivkey);
@@ -212,6 +233,33 @@ public class DigitalSignature {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+    }
+    
+    public static PublicKey readPublicKey(String m, String exp){
+    	try {
+    		byte[] modulusBytes = Base64.decodeBase64(m);
+    		byte[] exponentBytes = Base64.decodeBase64(exp);
+			BigInteger modulus = new BigInteger(1, modulusBytes);
+			BigInteger exponent = new BigInteger(1, exponentBytes);
+			//BigInteger modulus = new BigInteger(m);
+			//BigInteger exponent = new BigInteger(exp);
+			RSAPublicKeySpec rsaPubKey = new RSAPublicKeySpec(modulus, exponent);
+			KeyFactory fact = KeyFactory.getInstance("RSA");
+			PublicKey pubKey = fact.generatePublic(rsaPubKey);
+			return pubKey;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
     }
 }
