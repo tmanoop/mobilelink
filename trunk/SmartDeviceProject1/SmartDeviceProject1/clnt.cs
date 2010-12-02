@@ -357,7 +357,7 @@ public class clnt
         }
     }
 
-    public static void sendToServer(TextBox textBox1, TextBox ServerIPAddress, byte[] m, byte[] exp, byte[] s)
+    public static void sendToServer(TextBox textBox1, TextBox ServerIPAddress, string m, string exp, string s)
     {
         try
         {
@@ -366,19 +366,23 @@ public class clnt
             TcpClient tcpclnt = new TcpClient();
             //Console.WriteLine("Connecting.....");
             tcpclnt.Connect(IPAddress.Parse(serverIP), 8000); // use the ipaddress as in the server program
+            ASCIIEncoding asen = new ASCIIEncoding();
+            byte[] ln = asen.GetBytes("\n");
 
             Stream stm = tcpclnt.GetStream();
+            //string mod = System.Text.ASCIIEncoding.ASCII.GetString(m, 0, m.Length);
+            textBox1.Text = textBox1.Text + "mod: "+m+"\r\n";
+            byte[] bs = asen.GetBytes(m);
+            stm.Write(bs, 0, bs.Length);
+            stm.Write(ln, 0, ln.Length);
 
-            stm.Write(m, 0, m.Length);
-            ASCIIEncoding asen = new ASCIIEncoding();
-            byte[] ba = asen.GetBytes("\n");
-            stm.Write(ba, 0, ba.Length);
+            byte[] e = asen.GetBytes(exp);
+            stm.Write(e, 0, e.Length);
+            stm.Write(ln, 0, ln.Length);
 
-            stm.Write(exp, 0, exp.Length);
-            stm.Write(ba, 0, ba.Length);
-
-            stm.Write(s, 0, s.Length);
-            stm.Write(ba, 0, ba.Length);
+            byte[] sig = asen.GetBytes(s);
+            stm.Write(sig, 0, sig.Length);
+            stm.Write(ln, 0, ln.Length);
 
             tcpclnt.Close();
             stm.Close();
@@ -413,9 +417,22 @@ public class clnt
             // However, you do not need to export the private key
             // for verification.
             RSAParameters Key = RSAalg.ExportParameters(true);
-            textBox1.Text = textBox1.Text + "Modulus: " + Key.Modulus.Length;
-            textBox1.Text = textBox1.Text + "Exp: " + Key.Exponent.Length;
+            textBox1.Text = textBox1.Text + "Modulus: " + Key.Modulus.Length+"\r\n";
+            string mod = "";
+            for (int i = 0; i < Key.Modulus.Length; i++)
+            {
+                //textBox1.Text = textBox1.Text + Key.Modulus[i];
+                mod = mod + Key.Modulus[i];
+            }
 
+            textBox1.Text = "\r\n" + textBox1.Text + "Exp: " + Key.Exponent.Length + "\r\n";
+            string exp = "";
+            for (int i = 0; i < Key.Exponent.Length;i++ )
+            {
+                //textBox1.Text = textBox1.Text + Key.Exponent[i];
+                exp = exp + Key.Exponent[i];
+            }
+           
             // Hash and sign the data.
             //Stopwatch stopWatch = Stopwatch.StartNew();
             int dat1 = System.Environment.TickCount;
@@ -425,7 +442,14 @@ public class clnt
             a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
             textBox1.Text = textBox1.Text + "originalData Size: " + originalData.Length + ", Time taken for signing: " + a.ToString() + "\r\n Signed data: " + " \r\n";
 
-            sendToServer(textBox1, ServerIPAddress, Key.Modulus, Key.Exponent,signedData);
+            string sig = "";
+            for (int i = 0; i < signedData.Length; i++)
+            {
+                //textBox1.Text = textBox1.Text + Key.Exponent[i];
+                sig = sig + signedData[i];
+            }
+
+            sendToServer(textBox1, ServerIPAddress, mod,exp,sig);
             /*
             for (int i = 0; i < signedData.Length;i++ )
             {
