@@ -33,16 +33,25 @@ public class clnt
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(str);
             //Console.WriteLine("Transmitting.....");
+            int dat1 = System.Environment.TickCount;
             stm.Write(ba, 0, ba.Length);
-            String trID = "";
             byte[] bb = new byte[100];
             int k = stm.Read(bb, 0, 100);
+            int dat2 = System.Environment.TickCount;
+            StringBuilder a = new StringBuilder();
+            a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
+            textBox1.Text = textBox1.Text + "RTT for LCA: " + a.ToString() + "\r\n";
+            String trID = "";
             for (int i = 0; i < k; i++)
             {
                 if (i < 3)
                 {
                     trID = trID + Convert.ToChar(bb[i]);
                     //textBox1.Text = textBox1.Text + "IP: "+Convert.ToChar(bb[i]);
+                }
+                else
+                {
+                    break;
                 }
                 //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
             }
@@ -104,6 +113,8 @@ public class clnt
             BluetoothAddress ADDRESS;//= new BluetoothAddress();
             
             DateTime date1 = DateTime.Now;
+            //setting bluetooth inquiry time to 5seconds. (initial default is 10 secs)
+            BC.InquiryLength = new TimeSpan(0, 0, 5);
             BluetoothDeviceInfo[] arr1 = BC.DiscoverDevices();
             DateTime date2 = DateTime.Now;
             TimeSpan rtt1 = date2.Subtract(date1);
@@ -129,13 +140,14 @@ public class clnt
             String localIP = GetMyIP();
 
             Byte[] msg;
-            msg = System.Text.Encoding.UTF8.GetBytes(localIP + "     ClientIP - My Location: Network Lab!!  " + trID);
+            msg = System.Text.Encoding.UTF8.GetBytes(trID);
 
+            int dat1 = System.Environment.TickCount;
             foreach (BluetoothDeviceInfo b in arr)
             {
                 ADDRESS = b.DeviceAddress;
              
-                //textBox1.Text = textBox1.Text +"Found Bluetooth DeviceName: '" + b.DeviceName + "'\r\n";
+                textBox1.Text = textBox1.Text +"Found Bluetooth DeviceName: '" + b.DeviceName + "'\r\n";
                 String st = b.DeviceName.Trim();
                 if (st.Contains("Pocket_PC"))
                 {
@@ -149,7 +161,12 @@ public class clnt
                         Guid MyServiceUuid = new Guid("a7d21339-7cee-43b1-ad2c-7236880dfd38");
                         BluetoothEndPoint ep = new BluetoothEndPoint(ADDRESS, MyServiceUuid);
                         //textBox1.Text = textBox1.Text + "Conneting...\r\n";
+                        int dat5 = System.Environment.TickCount;
                         BC.Connect(ep);
+                        int dat6 = System.Environment.TickCount;
+                        StringBuilder ac = new StringBuilder();
+                        ac.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat6 - dat5));
+                        textBox1.Text = textBox1.Text + " BT connection time: " + ac.ToString() + "\r\n";
                         //textBox1.Text = textBox1.Text + "Connected: \t " + BC.Connected + "\r\n";
 
                         Stream peerStream = BC.GetStream();
@@ -166,22 +183,22 @@ public class clnt
                         msg = System.Text.Encoding.UTF8.GetBytes(lng);
                         */
                         //msg = System.Text.Encoding.UTF8.GetBytes("My Location: Network Lab!!");
-                        //int dat1 = System.Environment.TickCount;
+                        int dat3 = System.Environment.TickCount;
                         
                         peerStream.Write(msg, 0, msg.Length);
 
-                        //byte[] bb1 = new byte[10000];
-                        //int k = peerStream.Read(bb1, 0, 10000);
-                        //int dat2 = System.Environment.TickCount;
-                        //StringBuilder a = new StringBuilder();
-                        //a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
-                        //textBox1.Text = textBox1.Text + "RTT for BT request: " + a.ToString() + "\r\n";
-                        /*
+                        byte[] bb1 = new byte[10000];
+                        int k = peerStream.Read(bb1, 0, 10000);
+                        int dat4 = System.Environment.TickCount;
+                        StringBuilder a = new StringBuilder();
+                        a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat4 - dat3));
+                        textBox1.Text = textBox1.Text + "1RTT for BT request: " + a.ToString() + "\r\n";
+                        /**/
                         for (int i = 0; i < k; i++)
                         {
                             textBox1.Text = textBox1.Text + Convert.ToChar(bb1[i]);
                         }
-                        */
+                        
 
                         peerStream.Close();
                         BC.Client.Close();
@@ -199,6 +216,10 @@ public class clnt
                 //Console.ReadLine();
 
             }
+            int dat2 = System.Environment.TickCount;
+            StringBuilder ab = new StringBuilder();
+            ab.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
+            textBox1.Text = textBox1.Text + "ALL BT requests: " + ab.ToString() + "\r\n";
             return rttBLTH;
         }
         catch (Exception ex)
@@ -357,7 +378,7 @@ public class clnt
         }
     }
 
-    public static void sendToServer(TextBox textBox1, TextBox ServerIPAddress, string m, string exp, string s)
+    public static void sendToServer(TextBox textBox1, TextBox ServerIPAddress, string m, string exp, string s, string org)
     {
         try
         {
@@ -371,7 +392,7 @@ public class clnt
 
             Stream stm = tcpclnt.GetStream();
             //string mod = System.Text.ASCIIEncoding.ASCII.GetString(m, 0, m.Length);
-            textBox1.Text = textBox1.Text + "mod: "+m+"\r\n";
+            textBox1.Text = textBox1.Text + "s: "+s+"\r\n";
             byte[] bs = asen.GetBytes(m);
             stm.Write(bs, 0, bs.Length);
             stm.Write(ln, 0, ln.Length);
@@ -382,6 +403,10 @@ public class clnt
 
             byte[] sig = asen.GetBytes(s);
             stm.Write(sig, 0, sig.Length);
+            stm.Write(ln, 0, ln.Length);
+
+            byte[] orig = asen.GetBytes(org);
+            stm.Write(orig, 0, orig.Length);
             stm.Write(ln, 0, ln.Length);
 
             tcpclnt.Close();
@@ -417,6 +442,7 @@ public class clnt
             // However, you do not need to export the private key
             // for verification.
             RSAParameters Key = RSAalg.ExportParameters(true);
+            textBox1.Text = textBox1.Text + "alg: "+RSAalg.KeyExchangeAlgorithm + " : " + RSAalg.SignatureAlgorithm;
             textBox1.Text = textBox1.Text + "Modulus: " + Key.Modulus.Length+"\r\n";
             string mod = "";
             for (int i = 0; i < Key.Modulus.Length; i++)
@@ -448,8 +474,16 @@ public class clnt
                 //textBox1.Text = textBox1.Text + Key.Exponent[i];
                 sig = sig + signedData[i];
             }
+            textBox1.Text = textBox1.Text + "org data \r\n";
+            string org = "";
+            for (int i = 0; i < originalData.Length; i++)
+            {
+                textBox1.Text = textBox1.Text + originalData[i];
+                org = org + originalData[i];
+            }
 
-            sendToServer(textBox1, ServerIPAddress, mod,exp,sig);
+
+            sendToServer(textBox1, ServerIPAddress, mod,exp,sig, org);
             /*
             for (int i = 0; i < signedData.Length;i++ )
             {
