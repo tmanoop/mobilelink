@@ -26,12 +26,17 @@ public class clnt
             //                String str = Console.ReadLine();
             //String str = claimerIP.Trim() + " ClientIP - Claimer Location: Network Lab!! \n";
             String str = "verification," + trID + ","+id.Text.ToString().Trim()+",12,999,0,"+claimerIP.Trim()+" \n";
-            //textBox1.Text = textBox1.Text + str;
+            textBox1.Text = textBox1.Text + str;
             Stream stm = tcpclnt.GetStream();
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(str);
             //Console.WriteLine("Transmitting.....");
+            int dat1 = System.Environment.TickCount;
             stm.Write(ba, 0, ba.Length);
+            int dat2 = System.Environment.TickCount;
+            StringBuilder a = new StringBuilder();
+            a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
+            textBox1.Text = textBox1.Text + "RTT for LCA: " + a.ToString() + "\r\n";
             //byte[] bb = new byte[1000];
             //int k = stm.Read(bb, 0, 1000);
             //for (int i = 0; i < k; i++)
@@ -61,7 +66,7 @@ public class clnt
 
                 BL.Start();
                 //MessageBox.Show("Accept Client.");
-                textBox1.Text = "Listening for client.. \r\n";
+                textBox1.Text = textBox1.Text + "Listening for client.. \r\n";
                 BluetoothClient BC = BL.AcceptBluetoothClient();
                 //TextBox textBox1;
                 //if (BC.RemoteMachineName.Equals(""))
@@ -75,21 +80,25 @@ public class clnt
                 int k = peer.Read(bb, 0, 10000);
                 for (int i = 0; i < k; i++)
                 {
-                    if (i < 15)
+                    /*if (i < 15)
                     {
                         claimerIP = claimerIP + Convert.ToChar(bb[i]);
                         //textBox1.Text = textBox1.Text + "IP: "+Convert.ToChar(bb[i]);
-                    }
-                    if(i > k-4)
+                    }*/
+                    if (i > k - 4)
                         trID = trID + Convert.ToChar(bb[i]);
+                    else
+                        break;
                     //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
                 }
                 //textBox1.Text = textBox1.Text + "Processing Tr_ID:"+trID;
-                //String str1 = "BT message recieved.";
-                //ASCIIEncoding asen = new ASCIIEncoding();
-                //byte[] ba = asen.GetBytes(str1);
+                
+                String str1 = "BT message recieved.";
+                ASCIIEncoding asen = new ASCIIEncoding();
+                byte[] ba = asen.GetBytes(str1);
                 //Console.WriteLine("Transmitting.....");
-                //peer.Write(ba, 0, ba.Length);
+                peer.Write(ba, 0, ba.Length);
+
                 //StreamReader rdr = new StreamReader(peer, Encoding.ASCII);
                 //byte[] buf = new byte[1024];
                 //int bytesRead = peer.Read(buf, 0, buf.Length);
