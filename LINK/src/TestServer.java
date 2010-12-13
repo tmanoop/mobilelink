@@ -14,6 +14,7 @@
  *  
  */
 
+import java.math.BigInteger;
 import java.net.*;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Scanner;
@@ -67,10 +68,21 @@ public class TestServer
 			
 				System.out.println("s: "+new String(s));
 				
-				DigitalSignature ds = new DigitalSignature();
-				RSAPublicKey rsaPubkey = (RSAPublicKey)ds.readPublicKey(new String(m), new String(exp));
+				clientsMessage = inputStream.readLine();
+				byte[] org = clientsMessage.getBytes();
+			
+				System.out.println("org: "+new String(org));
 				
-				System.out.println(ds.verify("claim: 01,12,999,0", rsaPubkey, s));
+				DigitalSignature ds = new DigitalSignature();
+				
+				BigInteger mod = new BigInteger(new String(m));
+				BigInteger e = new BigInteger(new String(exp));
+				
+				RSAPublicKey rsaPubkey = (RSAPublicKey)ds.readPublicKey(mod,e);
+				
+				System.out.println(rsaPubkey);
+				
+				System.out.println(ds.verify(org, rsaPubkey, s));
 				
 				outputStream.flush();
 				outputStream.close();

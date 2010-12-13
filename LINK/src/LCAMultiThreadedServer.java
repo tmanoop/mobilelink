@@ -104,11 +104,14 @@ public class LCAMultiThreadedServer implements Runnable{
 						vrfr.location = s.nextInt();
 						vrfr.serviceID = s.nextInt();
 						vrfr.time = s.nextInt();
-						claimer.setMOBIP(s.next());				
+						//claimer.setMOBIP(s.next());				
 						claimer.V.add(vrfr);
 						
 						parent.notify();
-						System.out.println(tr_id+"  tr_id. verifierID:"+vrfr.id+" at "+new Date());
+						
+						long elapsedTimeMillis = System.currentTimeMillis()-parent.prevReqTime; 
+						System.out.println(tr_id+"  tr_id. After "+elapsedTimeMillis+"msecs verifierID:"+vrfr.id+" at "+new Date());
+						parent.prevReqTime = System.currentTimeMillis();
 					}
 				}
 				inputStream.close();
