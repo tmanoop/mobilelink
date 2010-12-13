@@ -91,7 +91,7 @@ namespace SmartDeviceProject1
             StringBuilder b = new StringBuilder();
             b.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat3 - dat1));
             roundTripTime.Text = b.ToString();
-            textBox1.Text = "LCA Response: " + lcaResponse + "\r\n";
+            textBox1.Text = textBox1.Text + "LCA Response: " + lcaResponse + "\r\n";
             textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
             textBox1.Text = textBox1.Text + "BluetoothDiscovery: " + rttBLTH + "\r\n";
             
