@@ -40,13 +40,16 @@ public class LCAWorkerRunnable implements Runnable{
     public void LCAProcess(int tr_id){
 
 		try {
-				System.out.println(tr_id+"  tr_id. LCA waiting for verifications at "+ new Date());
-				//Thread.currentThread().sleep(20000);
-				int waitTime = 40000;
 				Transaction parent = lca.transactions.get(tr_id);
+				parent.prevReqTime = System.currentTimeMillis();
+				System.out.println(tr_id+"  tr_id. LCA waiting for verifications at "+ new Date());
+
+				
 				if(parent.verifiersCount == 0)
 					parent.verifiersCount = 1;
-				int reduceBy = waitTime/parent.verifiersCount;
+				System.out.println(tr_id+"  tr_id. num of verfrs: "+parent.verifiersCount);
+				int waitTime = 10000 * parent.verifiersCount;
+				//int reduceBy = waitTime/parent.verifiersCount;
 				synchronized(parent)
 				{
 					long StartTime = System.currentTimeMillis();
@@ -55,7 +58,7 @@ public class LCAWorkerRunnable implements Runnable{
 						if(waitTime != 0){
 							parent.wait(waitTime);
 							if((System.currentTimeMillis() - StartTime) < waitTime )
-								waitTime = waitTime/10;
+								waitTime = waitTime - waitTime/5;
 							else
 								break;
 						}

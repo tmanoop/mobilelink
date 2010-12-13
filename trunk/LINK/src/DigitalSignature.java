@@ -185,7 +185,7 @@ public class DigitalSignature {
     	System.out.println("Public Exp: ");
     	System.out.println(rsaPubkey.getPublicExponent());
     	
-    	RSAPublicKey rsaPubk = (RSAPublicKey)readPublicKey(rsaPubkey.getModulus().toString(),rsaPubkey.getPublicExponent().toString());
+    	RSAPublicKey rsaPubk = (RSAPublicKey)readPublicKey(rsaPubkey.getModulus(),rsaPubkey.getPublicExponent());
     	
     	System.out.println("Modulus: ");
     	//System.out.println(rsaPubk.getModulus());
@@ -201,7 +201,7 @@ public class DigitalSignature {
 
     	// Now verify it
 
-    	System.out.println(verify(message, rsaPubkey, signature));
+    	System.out.println(verify(message.getBytes(), rsaPubkey, signature));
       }
     
     public static byte[] sign(String message, RSAPrivateKey rsaPrivkey){
@@ -220,12 +220,12 @@ public class DigitalSignature {
     	
     }
     
-    public static boolean verify(String message, RSAPublicKey rsaPubkey, byte[] signature){
+    public static boolean verify(byte[] tbsMessage, RSAPublicKey rsaPubkey, byte[] signature){
 
     	Signature verifier;
 
     	try {
-			byte[] tbsMessage = message.getBytes("UTF-8");
+			//byte[] tbsMessage = message.getBytes("UTF-8");
 			verifier = Signature.getInstance("SHA1withRSA");
 			verifier.initVerify(rsaPubkey);
 			verifier.update(tbsMessage);
@@ -236,15 +236,15 @@ public class DigitalSignature {
 		}
     }
     
-    public static PublicKey readPublicKey(String m, String exp){
+    public static PublicKey readPublicKey(BigInteger m, BigInteger exp){
     	try {
-    		byte[] modulusBytes = Base64.decodeBase64(m);
-    		byte[] exponentBytes = Base64.decodeBase64(exp);
-			BigInteger modulus = new BigInteger(1, modulusBytes);
-			BigInteger exponent = new BigInteger(1, exponentBytes);
+    		//byte[] modulusBytes = Base64.decodeBase64(m);
+    		//byte[] exponentBytes = Base64.decodeBase64(exp);
+			//BigInteger modulus = new BigInteger(1, modulusBytes);
+			//BigInteger exponent = new BigInteger(1, exponentBytes);
 			//BigInteger modulus = new BigInteger(m);
 			//BigInteger exponent = new BigInteger(exp);
-			RSAPublicKeySpec rsaPubKey = new RSAPublicKeySpec(modulus, exponent);
+			RSAPublicKeySpec rsaPubKey = new RSAPublicKeySpec(m, exp);
 			KeyFactory fact = KeyFactory.getInstance("RSA");
 			PublicKey pubKey = fact.generatePublic(rsaPubKey);
 			return pubKey;
