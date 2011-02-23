@@ -1,0 +1,28 @@
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\bin\Release\SystemStateInformation.exe
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\bin\Release\SystemStateInformation.pdb
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.dll
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.Status.dll
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.PocketOutlook.dll
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.PocketOutlook.xml
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.Status.xml
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.xml
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.Form1.resources
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.Properties.Resources.resources
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.csproj.GenerateResource.Cache
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.exe
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.pdb
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\bin\Release\SystemStateInformation.exe
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\bin\Release\SystemStateInformation.pdb
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.dll
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.Status.dll
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.PocketOutlook.dll
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.PocketOutlook.xml
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.Status.xml
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\bin\Release\Microsoft.WindowsMobile.xml
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\obj\Release\ResolveAssemblyReference.cache
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.Form1.resources
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.Properties.Resources.resources
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.csproj.GenerateResource.Cache
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.exe
+C:\mobilelink\WiMoPower1_code\SystemStateInformation\obj\Release\SystemStateInformation.pdb

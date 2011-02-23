@@ -1,0 +1,20 @@
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\bin\Release\CEPowerState.exe
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\bin\Release\CEPowerState.pdb
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\bin\Release\Win32.dll
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\bin\Release\Win32.pdb
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.CEPowerStateForm.resources
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.Properties.Resources.resources
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.csproj.GenerateResource.Cache
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.exe
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.pdb
+C:\mobilelink\WiMoPower1_code\CEPowerState\bin\Release\CEPowerState.exe
+C:\mobilelink\WiMoPower1_code\CEPowerState\bin\Release\CEPowerState.pdb
+C:\mobilelink\WiMoPower1_code\CEPowerState\bin\Release\Win32.dll
+C:\mobilelink\WiMoPower1_code\CEPowerState\bin\Release\Win32.pdb
+C:\mobilelink\WiMoPower1_code\CEPowerState\obj\Release\ResolveAssemblyReference.cache
+C:\mobilelink\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.CEPowerStateForm.resources
+C:\mobilelink\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.Properties.Resources.resources
+C:\mobilelink\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.csproj.GenerateResource.Cache
+C:\mobilelink\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.exe
+C:\mobilelink\WiMoPower1_code\CEPowerState\obj\Release\CEPowerState.pdb
