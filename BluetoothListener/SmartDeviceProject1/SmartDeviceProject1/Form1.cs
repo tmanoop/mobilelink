@@ -57,7 +57,7 @@ namespace SmartDeviceProject1
         private void menuItem2_Click_1(object sender, EventArgs e)
         {
             //textBox1.Text = "Started.. \n";
-            clnt.read(textBox1, ServerIPAddress, id);
+            clnt.read(textBox1, id);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

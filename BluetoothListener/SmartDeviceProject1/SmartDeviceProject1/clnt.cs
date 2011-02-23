@@ -9,7 +9,7 @@ using InTheHand.Net.Sockets;
 using InTheHand.Net.Bluetooth;
 public class clnt
 {
-    static String serverIP = "192.168.1.8";
+    static String serverIP = "manoop.dyndns.org";
     //static String claimerIP = "";
     //static String serverIP = "192.168.1.11";
     //static String serverIP = "128.235.67.108";
@@ -20,13 +20,14 @@ public class clnt
             TcpClient tcpclnt = new TcpClient();
             //textBox1.Text = textBox1.Text + " verification msg sending to LCA!! \r\n" ;
             //Console.WriteLine("Connecting.....");
-            tcpclnt.Connect(IPAddress.Parse(serverIP), 8000); // use the ipaddress as in the server program
+            //tcpclnt.Connect(IPAddress.Parse(serverIP), 8000); // use the ipaddress as in the server program
+            tcpclnt.Connect(serverIP, 8000); // use the hostname of the server program
             //Console.WriteLine("Connected");
             //Console.Write("Enter the string to be transmitted : ");
             //                String str = Console.ReadLine();
             //String str = claimerIP.Trim() + " ClientIP - Claimer Location: Network Lab!! \n";
             String str = "verification," + trID + ","+id.Text.ToString().Trim()+",12,999,0,"+claimerIP.Trim()+" \n";
-            textBox1.Text = textBox1.Text + str;
+            //textBox1.Text = textBox1.Text + str;
             Stream stm = tcpclnt.GetStream();
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(str);
@@ -36,7 +37,7 @@ public class clnt
             int dat2 = System.Environment.TickCount;
             StringBuilder a = new StringBuilder();
             a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
-            textBox1.Text = textBox1.Text + "RTT for LCA: " + a.ToString() + "\r\n";
+            //textBox1.Text = textBox1.Text + "RTT for LCA: " + a.ToString() + "\r\n";
             //byte[] bb = new byte[1000];
             //int k = stm.Read(bb, 0, 1000);
             //for (int i = 0; i < k; i++)
@@ -51,11 +52,13 @@ public class clnt
         }
     }
 
-    public static void read(TextBox textBox1, TextBox ServerIPAddress, ComboBox id)
+    public static void read(TextBox textBox1, ComboBox id)
     {
-        serverIP = ServerIPAddress.Text.ToString().Trim();
+        //serverIP = ServerIPAddress.Text.ToString().Trim();
         //Guid gd = Guid.NewGuid();
         //MessageBox.Show("Guid: '" + gd + "'");
+        //String st = System.Net.Dns.GetHostName();
+        //Guid MyServiceUuid = new Guid("a7d21339-7cee-43b1-ad2c-7236880dfd38");
         Guid MyServiceUuid = new Guid("a7d21339-7cee-43b1-ad2c-7236880dfd38");
         BluetoothListener BL = new BluetoothListener(MyServiceUuid);
         
@@ -66,7 +69,7 @@ public class clnt
 
                 BL.Start();
                 //MessageBox.Show("Accept Client.");
-                textBox1.Text = textBox1.Text + "Listening for client.. \r\n";
+                textBox1.Text = "Listening for client.. \r\n";
                 BluetoothClient BC = BL.AcceptBluetoothClient();
                 //TextBox textBox1;
                 //if (BC.RemoteMachineName.Equals(""))
