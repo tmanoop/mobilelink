@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SmartDeviceProject1")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BLACKWELL cONSULTING sERVICES")]
+[assembly: AssemblyCompany("Manoop Mobile Services")]
 [assembly: AssemblyProduct("SmartDeviceProject1")]
-[assembly: AssemblyCopyright("Copyright © BLACKWELL cONSULTING sERVICES 2010")]
+[assembly: AssemblyCopyright("Copyright © Manoop Mobile Service 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
