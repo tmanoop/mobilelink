@@ -33,8 +33,6 @@
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.ServerIPAddress = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.id = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
@@ -62,21 +60,6 @@
             this.textBox1.Size = new System.Drawing.Size(221, 157);
             this.textBox1.TabIndex = 0;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // ServerIPAddress
-            // 
-            this.ServerIPAddress.Location = new System.Drawing.Point(79, 73);
-            this.ServerIPAddress.Name = "ServerIPAddress";
-            this.ServerIPAddress.Size = new System.Drawing.Size(108, 30);
-            this.ServerIPAddress.TabIndex = 5;
-            this.ServerIPAddress.Text = clnt.GetMyIP();
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(0, 73);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 30);
-            this.label1.Text = "ServerIP:";
             // 
             // label2
             // 
@@ -115,8 +98,6 @@
             this.ClientSize = new System.Drawing.Size(240, 266);
             this.Controls.Add(this.id);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.ServerIPAddress);
             this.Controls.Add(this.textBox1);
             this.Menu = this.mainMenu1;
             this.Name = "Form1";
@@ -130,8 +111,6 @@
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem menuItem2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox ServerIPAddress;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox id;
     }
