@@ -73,7 +73,7 @@ namespace SmartDeviceProject1
         {
             //textBox1.Text = "Sending Location claim to LBS.. \r\n";
             int dat1 = System.Environment.TickCount;
-            clnt.sendToLBS(textBox1, ServerIPAddress);
+            clnt.sendToLBS(textBox1);
             int dat2 = System.Environment.TickCount;
             StringBuilder a = new StringBuilder();
             a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
@@ -91,7 +91,7 @@ namespace SmartDeviceProject1
             StringBuilder b = new StringBuilder();
             b.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat3 - dat1));
             roundTripTime.Text = b.ToString();
-            textBox1.Text = textBox1.Text + "LCA Response: " + lcaResponse + "\r\n";
+            textBox1.Text = "LCA Response: " + lcaResponse + "\r\n";
             textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
             textBox1.Text = textBox1.Text + "BluetoothDiscovery: " + rttBLTH + "\r\n";
             
@@ -101,7 +101,8 @@ namespace SmartDeviceProject1
 
         private void menuItem4_Click(object sender, EventArgs e)
         {
-            clnt.testRSA(textBox1, ServerIPAddress);
+            clnt.testRSA(textBox1);
+            //SecurityManager.Test();
         }
 
     }

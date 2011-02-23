@@ -34,8 +34,6 @@
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ServerIPAddress = new System.Windows.Forms.TextBox();
             this.roundTripTime = new System.Windows.Forms.TextBox();
             this.RTT = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -73,22 +71,6 @@
             this.textBox1.Size = new System.Drawing.Size(228, 142);
             this.textBox1.TabIndex = 0;
             // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(0, 69);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 30);
-            this.label1.Text = "ServerIP:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // ServerIPAddress
-            // 
-            this.ServerIPAddress.Location = new System.Drawing.Point(75, 69);
-            this.ServerIPAddress.Name = "ServerIPAddress";
-            this.ServerIPAddress.Size = new System.Drawing.Size(109, 30);
-            this.ServerIPAddress.TabIndex = 4;
-            this.ServerIPAddress.Text = clnt.GetMyIP();
-            // 
             // roundTripTime
             // 
             this.roundTripTime.Location = new System.Drawing.Point(75, 250);
@@ -106,7 +88,7 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(186, 69);
+            this.label2.Location = new System.Drawing.Point(3, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 30);
             this.label2.Text = "Loc:";
@@ -119,7 +101,7 @@
             this.loc.Items.Add("221");
             this.loc.Items.Add("222");
             this.loc.Items.Add("223");
-            this.loc.Location = new System.Drawing.Point(229, 69);
+            this.loc.Location = new System.Drawing.Point(36, 69);
             this.loc.Name = "loc";
             this.loc.Size = new System.Drawing.Size(52, 30);
             this.loc.TabIndex = 9;
@@ -158,15 +140,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(131F, 131F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(230, 256);
+            this.ClientSize = new System.Drawing.Size(230, 266);
             this.Controls.Add(this.id);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.loc);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.RTT);
             this.Controls.Add(this.roundTripTime);
-            this.Controls.Add(this.ServerIPAddress);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Menu = this.mainMenu1;
             this.Name = "Form1";
@@ -180,8 +160,6 @@
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem menuItem3;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox ServerIPAddress;
         private System.Windows.Forms.TextBox roundTripTime;
         private System.Windows.Forms.Label RTT;
         private System.Windows.Forms.MenuItem menuItem4;
