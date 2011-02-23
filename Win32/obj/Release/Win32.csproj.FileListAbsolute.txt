@@ -1,0 +1,10 @@
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\Win32\bin\Release\Win32.dll
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\Win32\bin\Release\Win32.pdb
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\Win32\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\Win32\obj\Release\Win32.dll
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\Win32\obj\Release\Win32.pdb
+C:\mobilelink\WiMoPower1_code\Win32\bin\Release\Win32.dll
+C:\mobilelink\WiMoPower1_code\Win32\bin\Release\Win32.pdb
+C:\mobilelink\WiMoPower1_code\Win32\obj\Release\ResolveAssemblyReference.cache
+C:\mobilelink\WiMoPower1_code\Win32\obj\Release\Win32.dll
+C:\mobilelink\WiMoPower1_code\Win32\obj\Release\Win32.pdb

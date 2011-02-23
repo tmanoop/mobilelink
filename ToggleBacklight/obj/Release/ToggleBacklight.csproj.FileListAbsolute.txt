@@ -1,0 +1,20 @@
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\bin\Release\ToggleBacklight.exe
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\bin\Release\ToggleBacklight.pdb
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\bin\Release\Win32.dll
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\bin\Release\Win32.pdb
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.Form1.resources
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.Properties.Resources.resources
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.csproj.GenerateResource.Cache
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.exe
+C:\Documents and Settings\Manoop\My Documents\Downloads\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.pdb
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\bin\Release\ToggleBacklight.exe
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\bin\Release\ToggleBacklight.pdb
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\bin\Release\Win32.dll
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\bin\Release\Win32.pdb
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\obj\Release\ResolveAssemblyReference.cache
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.Form1.resources
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.Properties.Resources.resources
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.csproj.GenerateResource.Cache
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.exe
+C:\mobilelink\WiMoPower1_code\ToggleBacklight\obj\Release\ToggleBacklight.pdb
