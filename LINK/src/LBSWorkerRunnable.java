@@ -72,7 +72,7 @@ public class LBSWorkerRunnable implements Runnable{
 				Socket mobClient = null;
 				while(retry<4){
 					try {
-						mobClient = new Socket(MOBIP,8000);
+						mobClient = new Socket(MOBIP,8001); //mobile client will be listening at port 8001 for the claim decision
 						break;
 					} catch (Exception e) {
 						if(retry==3)

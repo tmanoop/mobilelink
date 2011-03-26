@@ -64,7 +64,7 @@ public class LBSMultiThreadedServer implements Runnable{
     		System.out.println("IP Address		: " +((serverSocket.getInetAddress()).getLocalHost()).getHostAddress());
     		System.out.println("Port Number		: "+serverPort);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot open port 8080", e);
+            throw new RuntimeException("Cannot open port "+serverPort, e);
         }
     }
 

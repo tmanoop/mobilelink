@@ -47,29 +47,32 @@ public class TestServer
 				String clientsMessage;
 
 				// Create an input stream to read a message from the Client Socket
-				BufferedReader inputStream= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+				InputStream is = clientSocket.getInputStream();
+				InputStream temp = is;
+				BufferedReader inputStream= new BufferedReader(new InputStreamReader(is));
 				
 				// Create an output stream to send response to the Client Socket
 				PrintStream outputStream = new PrintStream(clientSocket.getOutputStream());
+				Scanner sc = new Scanner(temp).useDelimiter("Manoop");
 				
 				// Read message sent by client
-				clientsMessage = inputStream.readLine();
-				byte[] m = clientsMessage.getBytes();
+				//clientsMessage = inputStream.readLine();
+				byte[] m = sc.next().getBytes();
 				
 				System.out.println("m: "+new String(m));
 				
-				clientsMessage = inputStream.readLine();
-				byte[] exp = clientsMessage.getBytes();
+				//clientsMessage = inputStream.readLine();
+				byte[] exp = sc.next().getBytes();
 				
 				System.out.println("exp: "+new String(exp));
 				
-				clientsMessage = inputStream.readLine();
-				byte[] s = clientsMessage.getBytes();
+				//clientsMessage = inputStream.readLine();
+				byte[] s = sc.next().getBytes();
 			
 				System.out.println("s: "+new String(s));
 				
-				clientsMessage = inputStream.readLine();
-				byte[] org = clientsMessage.getBytes();
+				//clientsMessage = inputStream.readLine();
+				byte[] org = sc.next().getBytes();
 			
 				System.out.println("org: "+new String(org));
 				
