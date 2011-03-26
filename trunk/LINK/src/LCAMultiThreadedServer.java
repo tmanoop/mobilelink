@@ -65,11 +65,12 @@ public class LCAMultiThreadedServer implements Runnable{
 					c.serviceID = s.nextInt();
 					c.time = s.nextInt();
 					
-					c.setMOBIP(clientSocket.getInetAddress().toString());
-					
 					int tr_id = lca.tr_id++;
 					Transaction tr = new Transaction(tr_id);
 					tr.verifiersCount = s.nextInt();
+					c.setMOBIP(s.next());
+					//c.setMOBIP(clientSocket.getInetAddress().toString());
+					
 					tr.c = c;
 					//read data and store in lca
 					//create transaction and store object in map 
