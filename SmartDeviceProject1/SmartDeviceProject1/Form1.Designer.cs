@@ -33,6 +33,7 @@
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.roundTripTime = new System.Windows.Forms.TextBox();
             this.RTT = new System.Windows.Forms.Label();
@@ -40,6 +41,10 @@
             this.loc = new System.Windows.Forms.ComboBox();
             this.id = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.menuItem6 = new System.Windows.Forms.MenuItem();
+            this.menuItem7 = new System.Windows.Forms.MenuItem();
+            this.menuItem8 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -50,6 +55,11 @@
             // 
             this.menuItem1.MenuItems.Add(this.menuItem3);
             this.menuItem1.MenuItems.Add(this.menuItem4);
+            this.menuItem1.MenuItems.Add(this.menuItem2);
+            this.menuItem1.MenuItems.Add(this.menuItem5);
+            this.menuItem1.MenuItems.Add(this.menuItem6);
+            this.menuItem1.MenuItems.Add(this.menuItem7);
+            this.menuItem1.MenuItems.Add(this.menuItem8);
             this.menuItem1.Text = "LINK Menu";
             this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
             // 
@@ -62,6 +72,11 @@
             // 
             this.menuItem4.Text = "Hash and Sign";
             this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
+            // 
+            // menuItem2
+            // 
+            this.menuItem2.Text = "WiFi RTT";
+            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click_2);
             // 
             // textBox1
             // 
@@ -135,6 +150,27 @@
             this.label3.Size = new System.Drawing.Size(30, 30);
             this.label3.Text = "ID:";
             // 
+            // menuItem5
+            // 
+            this.menuItem5.Checked = true;
+            this.menuItem5.Text = "BT Disc";
+            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+            // 
+            // menuItem6
+            // 
+            this.menuItem6.Text = "BT RTT";
+            this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
+            // 
+            // menuItem7
+            // 
+            this.menuItem7.Text = "Sign";
+            this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
+            // 
+            // menuItem8
+            // 
+            this.menuItem8.Text = "Verify";
+            this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(131F, 131F);
@@ -167,6 +203,11 @@
         private System.Windows.Forms.ComboBox loc;
         private System.Windows.Forms.ComboBox id;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.MenuItem menuItem2;
+        private System.Windows.Forms.MenuItem menuItem5;
+        private System.Windows.Forms.MenuItem menuItem6;
+        private System.Windows.Forms.MenuItem menuItem7;
+        private System.Windows.Forms.MenuItem menuItem8;
     }
 }
 

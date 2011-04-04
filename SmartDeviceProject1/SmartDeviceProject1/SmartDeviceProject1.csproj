@@ -79,6 +79,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="reportTime.cs" />
     <Compile Include="SecurityManager.cs" />
   </ItemGroup>
   <ItemGroup>
