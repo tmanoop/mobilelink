@@ -113,9 +113,13 @@ public class clnt
                   //  textBox1.Text = textBox1.Text + "no message... \r\n";
                 //else
                   //  textBox1.Text = textBox1.Text + " Message recieved: \r\n" + " " + s + "\r\n";
-                sendToLCA(textBox1, claimerIP.Trim(), trID.Trim(),id);
+                //sendToLCA(textBox1, claimerIP.Trim(), trID.Trim(),id);
                 //BL.Stop();
+                peer.Flush();
                 peer.Close();
+                BC.Dispose();
+                BC.Client.Close();
+                BC.Close();
             }
             catch (Exception ex)
             {
