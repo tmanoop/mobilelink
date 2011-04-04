@@ -96,7 +96,7 @@ public class clnt
             int k = stm.Read(bb, 0, 100);
          
             //for (int i = 0; i < k; i++)
-                //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
+              //  textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
             //textBox1.Text = textBox1.Text + " \r\n";
             tcpclnt.Close();
             stm.Close();
@@ -105,6 +105,72 @@ public class clnt
         catch (Exception ex)
         {
             Console.WriteLine("Error..... " + ex.StackTrace);
+        }
+    }
+
+    public static BluetoothDeviceInfo[] bluetoothDiscovery()
+    {
+        BluetoothDeviceInfo[] arr1 = null;
+        BluetoothDeviceInfo[] arr = null;
+        try
+        {
+            BluetoothClient BC = new BluetoothClient();
+            //setting bluetooth inquiry time to 5seconds. (initial default is 10 secs)
+            BC.InquiryLength = new TimeSpan(0, 0, 5);
+            arr1 = BC.DiscoverDevices();
+            arr = new BluetoothDeviceInfo[arr1.Length];
+            int vrfrCount = 0;
+            foreach (BluetoothDeviceInfo b in arr1)
+            {
+                String st = b.DeviceName.Trim();
+                if (st.Contains("Pocket_PC2"))
+                {
+                    arr[vrfrCount] = b;
+                    vrfrCount++;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            
+        }
+        return arr;
+    }
+
+    public static void bluetoothTestConnection(TextBox textBox1,BluetoothAddress ADDRESS, Byte[] msg)
+    {
+        try
+        {
+            BluetoothClient BC = new BluetoothClient();
+
+            Guid MyServiceUuid = new Guid("a7d21339-7cee-43b1-ad2c-7236880dfd38");
+            BluetoothEndPoint ep = new BluetoothEndPoint(ADDRESS, MyServiceUuid);
+            //textBox1.Text = textBox1.Text + "Conneting...\r\n";
+            //textBox1.Text = textBox1.Text + ADDRESS + " \r\n";
+            
+            BC.Connect(ep);
+            
+            Stream peerStream = BC.GetStream();
+            //textBox1.Text = textBox1.Text + "writing... \r\n";
+            peerStream.Write(msg, 0, msg.Length);
+            byte[] bb1 = new byte[10000];
+            //textBox1.Text = textBox1.Text + "reading... \r\n";
+            int k = peerStream.Read(bb1, 0, 10000);
+            /*
+            for (int i = 0; i < k; i++)
+            {
+                textBox1.Text = textBox1.Text + Convert.ToChar(bb1[i]);
+            }
+            */
+            peerStream.Flush();
+            peerStream.Close();
+            BC.Dispose();
+            BC.Client.Close();
+            BC.Close();
+        }
+        catch (Exception ex)
+        {
+            
         }
     }
 

@@ -16,3 +16,13 @@ C:\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProje
 C:\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.csproj.GenerateResource.Cache
 C:\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.exe
 C:\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.pdb
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\SmartDeviceProject1.exe
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\SmartDeviceProject1.pdb
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\InTheHand.Net.Personal.dll
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\bin\Debug\InTheHand.Net.Personal.xml
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.Form1.resources
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.Properties.Resources.resources
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.csproj.GenerateResource.Cache
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.exe
+C:\Documents and Settings\Manoop\My Documents\mobilelink\SmartDeviceProject1\SmartDeviceProject1\obj\Debug\SmartDeviceProject1.pdb
