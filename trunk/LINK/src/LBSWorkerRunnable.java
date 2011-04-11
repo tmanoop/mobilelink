@@ -64,18 +64,20 @@ public class LBSWorkerRunnable implements Runnable{
 				else
 					msg = "Coupon not available for claimer!! \r\n";
 				String MOBIP = clientsMessage.substring(0, clientsMessage.indexOf("ClientIP") - 1).trim();
+				
 				//String MOBIP = "";
 				System.out.println("MOBIP: "+MOBIP);
 				//sometimes mobile client listener is not yet ready. so keeping buffer time 3secs
 				//Thread.currentThread().sleep(6000);//sleep for 1000 ms
 				int retry = 0;
 				Socket mobClient = null;
-				while(retry<4){
+				int retryNum = 15; 
+				while(retry<retryNum){
 					try {
 						mobClient = new Socket(MOBIP,8001); //mobile client will be listening at port 8001 for the claim decision
 						break;
 					} catch (Exception e) {
-						if(retry==3)
+						if(retry==(retryNum-1))
 							break;
 						System.out.println("claimer busy!!");
 						//Thread.currentThread().sleep(2000);
@@ -94,6 +96,7 @@ public class LBSWorkerRunnable implements Runnable{
 			else if(clientsMessage.contains("claim")){
 				System.out.println("Message from Client: " + clientsMessage);
 				String msg = "verify your location at LCA.";
+				//clientSocket.getInetAddress();
 				outputStream.print(msg);
 				//Socket mobSocket = new Socket("128.235.69.143",8001);
 				//PrintStream mobStream=new PrintStream(clientSocket.getOutputStream());

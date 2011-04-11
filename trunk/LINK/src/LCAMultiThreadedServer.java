@@ -68,7 +68,7 @@ public class LCAMultiThreadedServer implements Runnable{
 					int tr_id = lca.tr_id++;
 					Transaction tr = new Transaction(tr_id);
 					tr.verifiersCount = s.nextInt();
-					c.setMOBIP(s.next());
+					c.setMOBIP(s.next()); //this didnot work when testing in NJIT network, use below line
 					//c.setMOBIP(clientSocket.getInetAddress().toString());
 					
 					tr.c = c;
@@ -88,7 +88,7 @@ public class LCAMultiThreadedServer implements Runnable{
 				
 				//if verification read data and notify
 				//handle verifications
-				if(clientsMessage.contains("verification")){
+				else if(clientsMessage.contains("verification")){
 					//verifier msg example of clientsMessage = verification: claimer id,01,12,999,0
 					Scanner s = new Scanner(clientsMessage).useDelimiter(",");
 					s.next();
@@ -114,7 +114,8 @@ public class LCAMultiThreadedServer implements Runnable{
 						System.out.println(tr_id+"  tr_id. After "+elapsedTimeMillis+"msecs verifierID:"+vrfr.id+" at "+new Date());
 						parent.prevReqTime = System.currentTimeMillis();
 					}
-				}
+				} else
+					System.out.println("Request recieved at " + new Date());
 				inputStream.close();
 				outputStream.close();
 			} catch (IOException e) {
