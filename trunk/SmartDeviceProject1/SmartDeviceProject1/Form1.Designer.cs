@@ -34,6 +34,10 @@
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.menuItem6 = new System.Windows.Forms.MenuItem();
+            this.menuItem7 = new System.Windows.Forms.MenuItem();
+            this.menuItem8 = new System.Windows.Forms.MenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.roundTripTime = new System.Windows.Forms.TextBox();
             this.RTT = new System.Windows.Forms.Label();
@@ -41,10 +45,8 @@
             this.loc = new System.Windows.Forms.ComboBox();
             this.id = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.menuItem5 = new System.Windows.Forms.MenuItem();
-            this.menuItem6 = new System.Windows.Forms.MenuItem();
-            this.menuItem7 = new System.Windows.Forms.MenuItem();
-            this.menuItem8 = new System.Windows.Forms.MenuItem();
+            this.menuItem9 = new System.Windows.Forms.MenuItem();
+            this.menuItem10 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -65,6 +67,8 @@
             // 
             // menuItem3
             // 
+            this.menuItem3.MenuItems.Add(this.menuItem10);
+            this.menuItem3.MenuItems.Add(this.menuItem9);
             this.menuItem3.Text = "Coupon";
             this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click_1);
             // 
@@ -77,6 +81,27 @@
             // 
             this.menuItem2.Text = "WiFi RTT";
             this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click_2);
+            // 
+            // menuItem5
+            // 
+            this.menuItem5.Checked = true;
+            this.menuItem5.Text = "BT Disc";
+            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+            // 
+            // menuItem6
+            // 
+            this.menuItem6.Text = "BT RTT";
+            this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
+            // 
+            // menuItem7
+            // 
+            this.menuItem7.Text = "Sign";
+            this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
+            // 
+            // menuItem8
+            // 
+            this.menuItem8.Text = "Verify";
+            this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
             // 
             // textBox1
             // 
@@ -150,26 +175,15 @@
             this.label3.Size = new System.Drawing.Size(30, 30);
             this.label3.Text = "ID:";
             // 
-            // menuItem5
+            // menuItem9
             // 
-            this.menuItem5.Checked = true;
-            this.menuItem5.Text = "BT Disc";
-            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+            this.menuItem9.Text = "Multiple tests";
+            this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
             // 
-            // menuItem6
+            // menuItem10
             // 
-            this.menuItem6.Text = "BT RTT";
-            this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
-            // 
-            // menuItem7
-            // 
-            this.menuItem7.Text = "Sign";
-            this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
-            // 
-            // menuItem8
-            // 
-            this.menuItem8.Text = "Verify";
-            this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
+            this.menuItem10.Text = "Single test";
+            this.menuItem10.Click += new System.EventHandler(this.menuItem3_Click_1);
             // 
             // Form1
             // 
@@ -208,6 +222,8 @@
         private System.Windows.Forms.MenuItem menuItem6;
         private System.Windows.Forms.MenuItem menuItem7;
         private System.Windows.Forms.MenuItem menuItem8;
+        private System.Windows.Forms.MenuItem menuItem9;
+        private System.Windows.Forms.MenuItem menuItem10;
     }
 }
 

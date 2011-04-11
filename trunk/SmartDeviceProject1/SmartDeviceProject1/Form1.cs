@@ -77,32 +77,67 @@ namespace SmartDeviceProject1
 
         private void menuItem3_Click_1(object sender, EventArgs e)
         {
+            String[] linkResponseTimes = linkProtocol();
+
+            textBox1.Text = textBox1.Text + "LBS Response: " + linkResponseTimes[0] + "\r\n";
+            textBox1.Text = textBox1.Text + "LBS RTT: " + linkResponseTimes[1] + "\r\n";
+            textBox1.Text = textBox1.Text + "BT DISC: " + linkResponseTimes[2] + "\r\n";
+            textBox1.Text = textBox1.Text + "LCA RTT: " + linkResponseTimes[3] + "\r\n";
+            textBox1.Text = textBox1.Text + "BT Conn: " + linkResponseTimes[4] + "\r\n";
+            textBox1.Text = textBox1.Text + "BT RTT: " + linkResponseTimes[5] + "\r\n";
+            textBox1.Text = textBox1.Text + "Signing: " + linkResponseTimes[6] + "\r\n";
+            textBox1.Text = textBox1.Text + "verifying: " + linkResponseTimes[7] + "\r\n";
+            textBox1.Text = textBox1.Text + "filter: " + linkResponseTimes[8] + "\r\n";
+            textBox1.Text = textBox1.Text + "LBS Response time: " + linkResponseTimes[9] + "\r\n";
+            roundTripTime.Text = linkResponseTimes[10];
+            textBox1.Text = textBox1.Text + "connect time: " + linkResponseTimes[11] + "\r\n";
+        }
+
+        private String[] linkProtocol()
+        {
             //textBox1.Text = "Sending Location claim to LBS.. \r\n";
             int dat1 = System.Environment.TickCount;
             clnt.sendToLBS(textBox1);
             int dat2 = System.Environment.TickCount;
-            StringBuilder a = new StringBuilder();
-            a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
+            int a = dat2 - dat1;
             //textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
             //roundTripTime.Text = a.ToString();
-            String rttTCP = a.ToString();
+            String lbsTime = a.ToString();
 
 
             //textBox1.Text = textBox1.Text + "Sending Location claim to LCA.. \r\n";
             //clnt.sendToLCA(textBox1,loc,id);
             //bluetooth call moved back to lca function to pass trID
-            String rttBLTH = clnt.connect(textBox1, loc, id);
-            String lcaResponse = clnt.recieve(textBox1);
+            String[] delayTimes = new String[7];
+            int connectTime1 = System.Environment.TickCount;
+            delayTimes = clnt.connect(textBox1, loc, id);
+            int lbs = System.Environment.TickCount;
+            String lbsResponse = clnt.recieve(textBox1);
             int dat3 = System.Environment.TickCount;
-            StringBuilder b = new StringBuilder();
-            b.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat3 - dat1));
-            roundTripTime.Text = b.ToString();
-            textBox1.Text = "LCA Response: " + lcaResponse + "\r\n";
-            textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
-            textBox1.Text = textBox1.Text + "BluetoothDiscovery: " + rttBLTH + "\r\n";
+            int lbsFinTime = dat3 - lbs;
+
+            int connectTime = lbs - connectTime1;
+
+            int linkRTT = dat3 - dat1;
             
+            String[] linkResponseTimes = new String[12];
+            linkResponseTimes[0] = lbsResponse;
+            linkResponseTimes[1] = lbsTime;
+            linkResponseTimes[2] = delayTimes[0];
+            linkResponseTimes[3] = delayTimes[1];
+            linkResponseTimes[4] = delayTimes[2];
+            linkResponseTimes[5] = delayTimes[3];
+            linkResponseTimes[6] = delayTimes[4];
+            linkResponseTimes[7] = delayTimes[5];
+            linkResponseTimes[8] = delayTimes[6];
+            linkResponseTimes[9] = lbsFinTime.ToString();
+            linkResponseTimes[10] = linkRTT.ToString();
+            linkResponseTimes[11] = connectTime.ToString();
+
             // Forces the Garbage Collect to run on the system.
             System.GC.Collect();
+
+            return linkResponseTimes;
         }
 
         private void menuItem4_Click(object sender, EventArgs e)
@@ -189,13 +224,13 @@ namespace SmartDeviceProject1
             // Create a new List
             List<String> timeStatList = new List<String>();
             //run test for 1 hour
-            //int x = 0;
+            int x = 0;
             BluetoothDeviceInfo[] arr1 = clnt.bluetoothDiscovery();
             textBox1.Text = textBox1.Text + "Number of BT devices: " + arr1.Length + " \r\n";
             textBox1.Text = textBox1.Text + "BT device: " + arr1[0].DeviceName + " \r\n";
             Byte[] msg = System.Text.Encoding.UTF8.GetBytes("Test");
-            while (elapsedTime.TotalMinutes <= 60 && arr1.Length != 0)
-            //while (x <= 0 && arr1.Length != 0)
+            //while (elapsedTime.TotalMinutes <= 60 && arr1.Length != 0)
+            while (x <= 0 && arr1.Length != 0)
             {
                 int dat1 = System.Environment.TickCount;
                 clnt.bluetoothTestConnection(textBox1,arr1[0].DeviceAddress,msg);
@@ -210,9 +245,10 @@ namespace SmartDeviceProject1
                 currTime = DateTime.Now;
                 elapsedTime = currTime - startTime;
                 //textBox1.Text = textBox1.Text + "elapsedTime: " + elapsedTime.TotalMinutes + " \r\n";
-                //x++;
+                x++;
             }
             textBox1.Text = textBox1.Text + "elapsedTime: " + elapsedTime.TotalMinutes + " \r\n";
+            textBox1.Text = textBox1.Text + "BT RTT: " + timeStatList[0] + " \r\n";
             report.writeToFile(timeStatList);
         }
 
@@ -294,6 +330,28 @@ namespace SmartDeviceProject1
             }
             textBox1.Text = textBox1.Text + "elapsedTime: " + elapsedTime.TotalMinutes + " \r\n";
             report.writeToFile(timeStatList);
+        }
+
+        private void menuItem9_Click(object sender, EventArgs e)
+        {
+            // Create a new List
+            List<String> timeStatList = new List<String>();
+
+            int testRound = 0;
+            while(testRound < 20){
+                String[] linkResponseTimes = linkProtocol();
+
+                String test = "";
+                for(int i=1;i<linkResponseTimes.Length;i++)
+                {
+                    test = test + linkResponseTimes[i] + ",";
+                }
+                timeStatList.Add(test);
+                report.writeToFile(timeStatList, "LinkRTT.txt",false);
+                testRound++;
+            }
+            report.writeToFile(timeStatList,"LinkRTT.txt");
+            textBox1.Text = "Multiple tests completed.";
         }
     }
 }
