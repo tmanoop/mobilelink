@@ -9,9 +9,9 @@ using InTheHand.Net.Sockets;
 using InTheHand.Net.Bluetooth;
 public class clnt
 {
-    static String serverIP = "manoop.dyndns.org";
+    //static String serverIP = "manoop.dyndns.org";
     //static String claimerIP = "";
-    //static String serverIP = "192.168.1.11";
+    static String serverIP = "192.168.1.6";
     //static String serverIP = "128.235.67.108";
     public static void sendToLCA(TextBox textBox1, String claimerIP, String trID, ComboBox id)
     {
@@ -113,13 +113,9 @@ public class clnt
                   //  textBox1.Text = textBox1.Text + "no message... \r\n";
                 //else
                   //  textBox1.Text = textBox1.Text + " Message recieved: \r\n" + " " + s + "\r\n";
-                //sendToLCA(textBox1, claimerIP.Trim(), trID.Trim(),id);
+                sendToLCA(textBox1, claimerIP.Trim(), trID.Trim(),id);
                 //BL.Stop();
-                peer.Flush();
                 peer.Close();
-                BC.Dispose();
-                BC.Client.Close();
-                BC.Close();
             }
             catch (Exception ex)
             {
