@@ -63,8 +63,9 @@ namespace SmartDeviceProject1
         private void menuItem2_Click_1(object sender, EventArgs e)
         {
             textBox1.Text = "Sending Location claim to LCA.. \r\n";
+            BluetoothDeviceInfo[] b = new BluetoothDeviceInfo[2];
             int dat1 = System.Environment.TickCount;
-            clnt.sendToLCA(textBox1,loc,id,0);
+            clnt.sendToLCA(textBox1,loc,id,b);
             int dat2 = System.Environment.TickCount;
             StringBuilder a = new StringBuilder();
             a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
@@ -77,7 +78,10 @@ namespace SmartDeviceProject1
 
         private void menuItem3_Click_1(object sender, EventArgs e)
         {
-            String[] linkResponseTimes = linkProtocol();
+            //below Test2 is asynch and did not work when running on WIN MOBILE. It worked only in debug mode deployment to phone.
+            //linkProtocol2();
+            //For test1, uncomment below section
+            String[] linkResponseTimes = linkProtocol1();
 
             textBox1.Text = textBox1.Text + "LBS Response: " + linkResponseTimes[0] + "\r\n";
             textBox1.Text = textBox1.Text + "LBS RTT: " + linkResponseTimes[1] + "\r\n";
@@ -93,7 +97,12 @@ namespace SmartDeviceProject1
             textBox1.Text = textBox1.Text + "connect time: " + linkResponseTimes[11] + "\r\n";
         }
 
-        private String[] linkProtocol()
+        private void linkProtocol2()
+        {
+            BluetoothCall bCall = new BluetoothCall(textBox1, loc, id);
+            bCall.connect(textBox1, loc, id);
+        }
+        private String[] linkProtocol1()
         {
             //textBox1.Text = "Sending Location claim to LBS.. \r\n";
             int dat1 = System.Environment.TickCount;
@@ -111,6 +120,8 @@ namespace SmartDeviceProject1
             String[] delayTimes = new String[7];
             int connectTime1 = System.Environment.TickCount;
             delayTimes = clnt.connect(textBox1, loc, id);
+            //BluetoothCall bCall = new BluetoothCall(textBox1, loc, id);
+            //delayTimes = bCall.connect(textBox1, loc, id);
             int lbs = System.Environment.TickCount;
             String lbsResponse = clnt.recieve(textBox1);
             int dat3 = System.Environment.TickCount;
@@ -190,24 +201,34 @@ namespace SmartDeviceProject1
             // Create a new List
             List<String> timeStatList = new List<String>();
             //run test for 1 hour
-            //int x = 0;
-            while (elapsedTime.TotalMinutes <= 60)
-            //while (x <= 0)
+            int x = 0;
+            //while (elapsedTime.TotalMinutes <= 60)
+            while (x <= 0)
             {
                 int dat1 = System.Environment.TickCount;
-                clnt.bluetoothDiscovery();
+                BluetoothDeviceInfo[] arr1 = clnt.bluetoothDiscovery();
                 int dat2 = System.Environment.TickCount;
                 StringBuilder a = new StringBuilder();
                 a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
                 //textBox1.Text = textBox1.Text + "RTT for TCP: " + a.ToString() + "\r\n";
                 //roundTripTime.Text = a.ToString();
-                String rttTCP = a.ToString();
+                String rttTCP = "";
+                foreach (BluetoothDeviceInfo b in arr1)
+                {
+                    if (b != null)
+                    {
+                        textBox1.Text = textBox1.Text + b.DeviceAddress.ToString() + " \r\n";
+                        rttTCP = rttTCP + b.DeviceAddress.ToString() + " \r\n";
+                    }
+                }
+
+                //String rttTCP = a.ToString();
                 timeStatList.Add(rttTCP);
                 //textBox1.Text = textBox1.Text + startTime.Second + " \r\n";
                 currTime = DateTime.Now;
                 elapsedTime = currTime - startTime;
                 //textBox1.Text = textBox1.Text + "elapsedTime: " + elapsedTime.TotalMinutes + " \r\n";
-                //x = 1;
+                x++;
             }
             textBox1.Text = textBox1.Text + "elapsedTime: " + elapsedTime.TotalMinutes + " \r\n";
             report.writeToFile(timeStatList);
@@ -334,24 +355,48 @@ namespace SmartDeviceProject1
 
         private void menuItem9_Click(object sender, EventArgs e)
         {
+            multiTest1();
+        }
+
+        private void multiTest1()
+        {
             // Create a new List
             List<String> timeStatList = new List<String>();
 
             int testRound = 0;
-            while(testRound < 20){
-                String[] linkResponseTimes = linkProtocol();
+            while (testRound < 20)
+            {
+                String[] linkResponseTimes = linkProtocol1();
 
                 String test = "";
-                for(int i=1;i<linkResponseTimes.Length;i++)
+                for (int i = 1; i < linkResponseTimes.Length; i++)
                 {
                     test = test + linkResponseTimes[i] + ",";
                 }
                 timeStatList.Add(test);
-                report.writeToFile(timeStatList, "LinkRTT.txt",false);
+                report.writeToFile(timeStatList, "LinkRTT.txt", false);
                 testRound++;
             }
-            report.writeToFile(timeStatList,"LinkRTT.txt");
+            report.writeToFile(timeStatList, "LinkRTT.txt");
             textBox1.Text = "Multiple tests completed.";
+        }
+
+        private void multiTest2()
+        {
+            int testRound = 0;
+            while (testRound < 20)
+            {
+                linkProtocol2();
+                testRound++;
+            }
+        }
+
+        private void menuItem11_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = textBox1.Text + "Calling BT async" + " \r\n";
+            //call asynch BT DISC
+            BluetoothCall bCall = new BluetoothCall(textBox1,loc,id);
+            bCall.bluetoothDiscoveryAsynch();
         }
     }
 }

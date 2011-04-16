@@ -32,6 +32,8 @@
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.menuItem10 = new System.Windows.Forms.MenuItem();
+            this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem5 = new System.Windows.Forms.MenuItem();
@@ -45,8 +47,7 @@
             this.loc = new System.Windows.Forms.ComboBox();
             this.id = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.menuItem9 = new System.Windows.Forms.MenuItem();
-            this.menuItem10 = new System.Windows.Forms.MenuItem();
+            this.menuItem11 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -62,6 +63,7 @@
             this.menuItem1.MenuItems.Add(this.menuItem6);
             this.menuItem1.MenuItems.Add(this.menuItem7);
             this.menuItem1.MenuItems.Add(this.menuItem8);
+            this.menuItem1.MenuItems.Add(this.menuItem11);
             this.menuItem1.Text = "LINK Menu";
             this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
             // 
@@ -71,6 +73,16 @@
             this.menuItem3.MenuItems.Add(this.menuItem9);
             this.menuItem3.Text = "Coupon";
             this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click_1);
+            // 
+            // menuItem10
+            // 
+            this.menuItem10.Text = "Single test";
+            this.menuItem10.Click += new System.EventHandler(this.menuItem3_Click_1);
+            // 
+            // menuItem9
+            // 
+            this.menuItem9.Text = "Multiple tests";
+            this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
             // 
             // menuItem4
             // 
@@ -175,22 +187,17 @@
             this.label3.Size = new System.Drawing.Size(30, 30);
             this.label3.Text = "ID:";
             // 
-            // menuItem9
+            // menuItem11
             // 
-            this.menuItem9.Text = "Multiple tests";
-            this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
-            // 
-            // menuItem10
-            // 
-            this.menuItem10.Text = "Single test";
-            this.menuItem10.Click += new System.EventHandler(this.menuItem3_Click_1);
+            this.menuItem11.Text = "Test BT DISC Async";
+            this.menuItem11.Click += new System.EventHandler(this.menuItem11_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(131F, 131F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(230, 266);
+            this.ClientSize = new System.Drawing.Size(230, 256);
             this.Controls.Add(this.id);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.loc);
@@ -224,6 +231,7 @@
         private System.Windows.Forms.MenuItem menuItem8;
         private System.Windows.Forms.MenuItem menuItem9;
         private System.Windows.Forms.MenuItem menuItem10;
+        private System.Windows.Forms.MenuItem menuItem11;
     }
 }
 
