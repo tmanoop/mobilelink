@@ -19,6 +19,8 @@ public class LCA {
 	ArrayList<User> mobileUsers;
 	int[][] M;
 
+	ArrayList<String> verifiersAddresses;
+	
 	// default constructor 
 	public LCA() {
 		
@@ -38,8 +40,28 @@ public class LCA {
 				M[i][j]=0;
 			}
 		}
+		loadVerifiersList();
 	}
 
+	private void loadVerifiersList() {
+		verifiersAddresses = new ArrayList<String>();
+		verifiersAddresses.add("0012D14C0895");
+		verifiersAddresses.add("0012D15E190D");
+		verifiersAddresses.add("0012D169146F");
+		verifiersAddresses.add("00123775CDE2");
+		verifiersAddresses.add("0012D1523438");
+		verifiersAddresses.add("0012D15E1956");
+		verifiersAddresses.add("0017E4CB0D00");
+		verifiersAddresses.add("0012D17650E3");		
+	}
+
+	public boolean isValidVerifier(String address){
+		if(verifiersAddresses.contains(address))
+			return true;
+		else
+			return false;
+	}
+	
 	synchronized public int decisionProcess(User c) {
 		// below is the list of verifiers for the claimer c.
 		// Get the list of verifiers available for this claimer c and also for

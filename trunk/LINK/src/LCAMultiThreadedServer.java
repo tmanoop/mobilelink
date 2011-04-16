@@ -2,6 +2,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -65,11 +66,23 @@ public class LCAMultiThreadedServer implements Runnable{
 					c.serviceID = s.nextInt();
 					c.time = s.nextInt();
 					
+					c.setMOBIP(s.next()); //this didnot work when testing in NJIT network, use below line
+					//s.next();
+					//c.setMOBIP(clientSocket.getInetAddress().toString());
+					List<String> verifiersAddressList = new ArrayList<String>();
+					String validAddresses ="";
+					while(s.hasNext()){
+						String address = s.next();
+						if(lca.isValidVerifier(address)){
+							verifiersAddressList.add(address);
+							validAddresses = validAddresses + address + ",";
+						}
+					}
+					
 					int tr_id = lca.tr_id++;
 					Transaction tr = new Transaction(tr_id);
-					tr.verifiersCount = s.nextInt();
-					c.setMOBIP(s.next()); //this didnot work when testing in NJIT network, use below line
-					//c.setMOBIP(clientSocket.getInetAddress().toString());
+					tr.verifiersCount = verifiersAddressList.size();
+					
 					
 					tr.c = c;
 					//read data and store in lca
@@ -77,7 +90,8 @@ public class LCAMultiThreadedServer implements Runnable{
 					lca.transactions.put(tr_id,tr);
 					lca.mobileUsers.get(c.id).totalCount++;
 					//write tr_id to claimer
-					outputStream.print(tr_id+"  tr_id. LCA recieved claim!! \n");
+					//System.out.println(tr_id+"  tr_id. "+validAddresses);
+					outputStream.print(tr_id+" ,"+validAddresses);
 					outputStream.flush();
 					//new thread on LCAWorkerRunnable object and start it
 					new Thread(
@@ -114,7 +128,19 @@ public class LCAMultiThreadedServer implements Runnable{
 						System.out.println(tr_id+"  tr_id. After "+elapsedTimeMillis+"msecs verifierID:"+vrfr.id+" at "+new Date());
 						parent.prevReqTime = System.currentTimeMillis();
 					}
-				} else
+				} else if(clientsMessage.contains("verifiersCount")){
+					Scanner s = new Scanner(clientsMessage).useDelimiter(",");
+					s.next();
+					int tr_id = s.nextInt();
+					Transaction parent = lca.transactions.get(tr_id);
+					synchronized(parent)
+					{
+						parent.verifiersCount = s.nextInt();
+						parent.notify();
+					}
+					System.out.println(tr_id+"  tr_id. Updated verifiers count to: "+parent.verifiersCount+" at "+new Date());
+				}
+				else
 					System.out.println("Request recieved at " + new Date());
 				inputStream.close();
 				outputStream.close();

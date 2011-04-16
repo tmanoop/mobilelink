@@ -47,14 +47,26 @@ public class LCAWorkerRunnable implements Runnable{
 				
 				if(parent.verifiersCount == 0)
 					parent.verifiersCount = 1;
-				System.out.println(tr_id+"  tr_id. num of verfrs: "+parent.verifiersCount);
-				int waitTime = 1000 * parent.verifiersCount;
+				System.out.println(tr_id+"  tr_id. num of initial verfrs: "+parent.verifiersCount);
+				int numVerifiers = parent.verifiersCount;
+				boolean numVrfrsRecieved = false; 
+				int waitTime = 1000 * numVerifiers;
+				int iniWaitTime = waitTime;
 				//int reduceBy = waitTime/parent.verifiersCount;
 				synchronized(parent)
-				{
+				{					
 					long StartTime = System.currentTimeMillis();
 					while(waitForMore(tr_id))
 					{
+						if(numVerifiers > parent.verifiersCount && numVrfrsRecieved == false)
+						{
+							int consumed = iniWaitTime - waitTime;
+							waitTime = (2000 * parent.verifiersCount) - consumed;
+							if(waitTime<=0)
+								break;
+							numVrfrsRecieved = true;
+							System.out.println(tr_id+" tr_id. waitTime: "+waitTime);
+						}
 						if(waitTime != 0){
 							parent.wait(waitTime);
 							if((System.currentTimeMillis() - StartTime) < waitTime )
