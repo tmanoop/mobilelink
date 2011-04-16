@@ -45,7 +45,10 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="InTheHand.Net.Personal, Version=2.2.0.0, Culture=neutral, PublicKeyToken=ea38caa273134499, processorArchitecture=MSIL" />
+    <Reference Include="InTheHand.Net.Personal, Version=3.0.2.0, Culture=neutral, PublicKeyToken=ea38caa273134499, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Downloads\32feet.NET 3.0_0916\32feet.NET 3.0.0916\Assemblies\CE2\InTheHand.Net.Personal.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BluetoothCall.cs" />
     <Compile Include="clnt.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -23,7 +23,7 @@ namespace SmartDeviceProject1
         static readonly object _locker = new object();
         //static String serverIP = "192.168.1.11";
         //static String serverIP = "128.235.67.108";
-        public static String sendToLCA(TextBox textBox1, ComboBox loc, ComboBox id, int vrfrCount)
+        public static List<String> sendToLCA(TextBox textBox1, ComboBox loc, ComboBox id, BluetoothDeviceInfo[] arr1)
         {
             try
             {
@@ -35,8 +35,13 @@ namespace SmartDeviceProject1
                 //Console.WriteLine("Connected");
                 //Console.Write("Enter the string to be transmitted : ");
                 //                String str = Console.ReadLine();
-                //String str = "My Location: Network Lab!! \n";
-                String str = "claim," + id.Text.ToString().Trim() + "," + loc.Text.ToString().Trim() + ",999,0," + vrfrCount + "," + GetMyIP() + ", \n";
+                String vrfrAddresses = "";
+                foreach(BluetoothDeviceInfo b in arr1)
+                {
+                    vrfrAddresses = vrfrAddresses + b.DeviceAddress + ",";
+                }
+
+                String str = "claim," + id.Text.ToString().Trim() + "," + loc.Text.ToString().Trim() + ",999,0," + GetMyIP() + "," + vrfrAddresses + " \n";
                 Stream stm = tcpclnt.GetStream();
                 ASCIIEncoding asen = new ASCIIEncoding();
                 byte[] ba = asen.GetBytes(str);
@@ -49,6 +54,22 @@ namespace SmartDeviceProject1
                 StringBuilder a = new StringBuilder();
                 a.AppendFormat(new System.Globalization.NumberFormatInfo(), "{0}", (dat2 - dat1));
                 //textBox1.Text = textBox1.Text + "RTT for LCA: " + a.ToString() + "\r\n";
+                List<String> responseList = new List<String>();
+                int j = 0;
+                String temp = "";
+                while (j<k)
+                {
+                    temp = "" + Convert.ToChar(bb[j++]);
+                    String value = "";
+                    while (j<k && temp != ",")
+                    {
+                        value = value + temp;
+                        temp = "" + Convert.ToChar(bb[j++]);
+                    }
+                    //textBox1.Text = textBox1.Text + "res: "+value +" \r\n";
+                    responseList.Add(value);
+                }
+                /*
                 String trID = "";
                 for (int i = 0; i < k; i++)
                 {
@@ -63,10 +84,11 @@ namespace SmartDeviceProject1
                     }
                     //textBox1.Text = textBox1.Text + Convert.ToChar(bb[i]);
                 }
+                */
                 tcpclnt.Close();
                 stm.Close();
                 //connect(textBox1,trID.Trim());
-                return trID;
+                return responseList;
             }
             catch (Exception ex)
             {
@@ -131,7 +153,7 @@ namespace SmartDeviceProject1
                 foreach (BluetoothDeviceInfo b in arr1)
                 {
                     String st = b.DeviceName.Trim();
-                    if (st.Contains("Pocket_PC5"))
+                    if (st.Contains("Pocket_PC"))
                     {
                         arr[vrfrCount] = b;
                         vrfrCount++;
@@ -182,6 +204,11 @@ namespace SmartDeviceProject1
             }
         }
 
+        public static void asyncBTDeviceName(BluetoothDeviceInfo b)
+        {
+            String st = b.DeviceName;
+        }
+
         public static String[] connect(TextBox textBox1, ComboBox loc, ComboBox id)
         {
 
@@ -192,7 +219,7 @@ namespace SmartDeviceProject1
                 //textBox1.Text = textBox1.Text + "BT Discovery started..  \r\n ";
                 BluetoothClient BC = new BluetoothClient();
                 //BluetoothAddress ADDRESS;//= new BluetoothAddress();
-
+                
                 //setting bluetooth inquiry time to 5seconds. (initial default is 10 secs)
                 BC.InquiryLength = new TimeSpan(0, 0, 5);
                 int btDisc1 = System.Environment.TickCount;
@@ -202,24 +229,15 @@ namespace SmartDeviceProject1
                 int btDisc = btDisc2 - btDisc1;
                 String rttBLTH = btDisc.ToString();
 
-                //filter only the testing devices
-                
-                int vrfrCount = 0;
-                BluetoothDeviceInfo[] arr = new BluetoothDeviceInfo[arr1.Length];
-                int filter1 = System.Environment.TickCount;
-                foreach (BluetoothDeviceInfo b in arr1)
+                //Second native query to fetch BT device name into BT stack
+                /*
+                for(int i=2;i<arr1.Length-1;i++)
                 {
-                    String btName = b.DeviceName;
-                    if (btName.StartsWith("Pocket_PC"))
-                    {
-                        arr[vrfrCount] = b;
-                        vrfrCount++;
-                    }
-                    
+                    Thread t = new Thread(() => asyncBTDeviceName(arr1[i]));
+                    t.Start();
                 }
-                int filter2 = System.Environment.TickCount;
-                int filter = filter2 - filter1;
-
+                */
+                 
                 //signing data before sending to lca
                 int sign1 = System.Environment.TickCount;
                 string dataString = "claim: 01,12,999,0";
@@ -229,10 +247,29 @@ namespace SmartDeviceProject1
                 int sign2 = System.Environment.TickCount;
                 int sign = sign2 - sign1;
 
+                //lca call
                 int lca1 = System.Environment.TickCount;
-                String trID = sendToLCA(textBox1, loc, id, vrfrCount); //all data is sent to lca method as params now
+                List<String> response = sendToLCA(textBox1, loc, id, arr1); //all data is sent to lca method as params now
                 int lca2 = System.Environment.TickCount;
                 int lca = lca2 - lca1;
+
+                //filter only the testing devices
+
+                int vrfrCount = 0;
+                BluetoothDeviceInfo[] arr = new BluetoothDeviceInfo[arr1.Length];
+                int filter1 = System.Environment.TickCount;
+                foreach (BluetoothDeviceInfo b in arr1)
+                {
+                    String btAddress = b.DeviceAddress.ToString();
+                    if (isValidVerifier(btAddress,response))
+                    {
+                        arr[vrfrCount] = b;
+                        vrfrCount++;
+                    }
+                    
+                }
+                int filter2 = System.Environment.TickCount;
+                int filter = filter2 - filter1;
 
                 //verify lca response
                 int verify1 = System.Environment.TickCount;
@@ -241,7 +278,7 @@ namespace SmartDeviceProject1
                 int verify = verify2 - verify1;
 
                 String localIP = GetMyIP();
-
+                String trID = response[0];
                 Byte[] msg;
                 msg = System.Text.Encoding.UTF8.GetBytes(trID);
                 int btcon = 0;
@@ -256,20 +293,14 @@ namespace SmartDeviceProject1
 
                     //textBox1.Text = textBox1.Text + "Found Bluetooth DeviceName: '" + b.DeviceName + "'\r\n";
                     String st = b.DeviceName.Trim();
-                    if (st.Contains("Pocket_PC"))
-                    {
-                        int btcon1 = System.Environment.TickCount;
-                        bt = btConnection(ADDRESS,msg);
-                        //Thread t = new Thread(() => btConnection(ADDRESS, msg));          // Kick off a new thread
-                        //t.Start();
-                        int btcon2 = System.Environment.TickCount;
-                        btcon = btcon2 - btcon1;
-                        //thrds[thr++] = btcon1.ToString();
-                    }
-
-
-                    //Console.ReadLine();
-
+                    
+                    int btcon1 = System.Environment.TickCount;
+                    bt = btConnection(ADDRESS,msg);
+                    //Thread t = new Thread(() => btConnection(ADDRESS, msg));          // Kick off a new thread
+                    //t.Start();
+                    int btcon2 = System.Environment.TickCount;
+                    btcon = btcon2 - btcon1;
+                    //thrds[thr++] = btcon1.ToString();
                 }
 
                 int dat2 = System.Environment.TickCount;
@@ -296,6 +327,16 @@ namespace SmartDeviceProject1
                 delayTimes[0] = ex.ToString();//BT DISC time
             }
             return delayTimes;
+        }
+
+        private static bool isValidVerifier(string btAddress, List<string> response)
+        {
+            foreach (String res in response)
+            {
+                if (res == btAddress)
+                    return true;
+            }
+            return false;
         }
 
         public static String[] btConnection(BluetoothAddress ADDRESS, Byte[] msg)
