@@ -213,6 +213,7 @@ namespace SmartDeviceProject1
         {
 
             String[] delayTimes = new String[7];
+            String allBls = "";
             String[] bt = new String[2];
             try
             {
@@ -283,8 +284,8 @@ namespace SmartDeviceProject1
                 msg = System.Text.Encoding.UTF8.GetBytes(trID);
                 int btcon = 0;
                 int dat1 = System.Environment.TickCount;
-                //String [] thrds = new String[arr.Length];
-                //int thr =0;
+                String [] thrds = new String[arr.Length];
+                int thr =0;
                 foreach (BluetoothDeviceInfo b in arr)
                 {
                     if (b == null)
@@ -292,33 +293,34 @@ namespace SmartDeviceProject1
                     BluetoothAddress ADDRESS = b.DeviceAddress;
 
                     //textBox1.Text = textBox1.Text + "Found Bluetooth DeviceName: '" + b.DeviceName + "'\r\n";
-                    String st = b.DeviceName.Trim();
+                    //String st = b.DeviceName.Trim();
                     
                     int btcon1 = System.Environment.TickCount;
                     bt = btConnection(ADDRESS,msg);
+                    allBls = allBls + bt[0] + "," + bt[1] + ",";
                     //Thread t = new Thread(() => btConnection(ADDRESS, msg));          // Kick off a new thread
                     //t.Start();
                     int btcon2 = System.Environment.TickCount;
                     btcon = btcon2 - btcon1;
-                    //thrds[thr++] = btcon1.ToString();
+                    thrds[thr++] = btcon.ToString();
                 }
 
                 int dat2 = System.Environment.TickCount;
-                int allBtConns = dat2 - btDisc1;
+                int allBtConns = dat2 - dat1;
                 //for (int i = 0; i < thrds.Length;i++ )
-                //  textBox1.Text = textBox1.Text + "Thread" + i + ": " + thrds[i] + "\r\n";
+                  //textBox1.Text = textBox1.Text + "Thread" + i + ": " + thrds[i] + "\r\n";
                 //textBox1.Text = textBox1.Text + "filter: " + filter.ToString() + "\r\n";
                 //textBox1.Text = textBox1.Text + "signing: " + sign.ToString() + "\r\n";
-                //textBox1.Text = textBox1.Text + "verify: " + verify.ToString() + "\r\n";
-                //textBox1.Text = textBox1.Text + "1 BT request: " + btcon.ToString() + "\r\n";
+                //textBox1.Text = textBox1.Text + "all allBls: " + allBls.ToString() + "\r\n";
+                //textBox1.Text = textBox1.Text + "Total BT: " + allBtConns.ToString() + "\r\n";
 
                 delayTimes[0] = rttBLTH;//BT DISC time
                 delayTimes[1] = lca.ToString();//lca RTT time
                 delayTimes[2] = bt[0];//btConnTime
-                delayTimes[3] = bt[1];//btRTTtime
+                delayTimes[3] = allBtConns.ToString();//btRTTtime
                 delayTimes[4] = sign.ToString();//sign
                 delayTimes[5] = verify.ToString();//verify
-                delayTimes[6] = filter.ToString();//verify            
+                delayTimes[6] = allBls.ToString();//verify            
             }
             catch (Exception ex)
             {
