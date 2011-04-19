@@ -23,10 +23,19 @@ namespace SmartDeviceProject1
         {
             String full_path = System.Reflection.Assembly.GetCallingAssembly().GetName().CodeBase;
             String directory_path = full_path.Substring(0, full_path.LastIndexOf("\\"));
+            Stream stream = null;
+            StreamWriter filewriter = null;
             if (deleteOld == true)
+            {
                 File.Delete(directory_path + "\\" + filename);
-            Stream stream = File.Open(directory_path + "\\" + filename, FileMode.OpenOrCreate, FileAccess.Write);
-            StreamWriter filewriter = new StreamWriter(stream);
+                stream = File.Open(directory_path + "\\" + filename, FileMode.OpenOrCreate, FileAccess.Write);
+                filewriter = new StreamWriter(stream);
+            }
+            else
+            {
+                
+                filewriter = File.AppendText(directory_path + "\\" + filename);
+            }
 
             for (int i = 0; i < timeStatList.Count; i++)
             {

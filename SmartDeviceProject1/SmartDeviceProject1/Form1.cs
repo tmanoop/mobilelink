@@ -81,14 +81,25 @@ namespace SmartDeviceProject1
             //below Test2 is asynch and did not work when running on WIN MOBILE. It worked only in debug mode deployment to phone.
             //linkProtocol2();
             //For test1, uncomment below section
+            // Create a new List
+            List<String> timeStatList = new List<String>();
+
             String[] linkResponseTimes = linkProtocol1();
+
+            String test = "";
+            for (int i = 1; i < linkResponseTimes.Length; i++)
+            {
+                test = test + linkResponseTimes[i] + ",";
+            }
+            timeStatList.Add(test);
+            report.writeToFile(timeStatList, "LinkRTT.txt", false);
 
             textBox1.Text = textBox1.Text + "LBS Response: " + linkResponseTimes[0] + "\r\n";
             textBox1.Text = textBox1.Text + "LBS RTT: " + linkResponseTimes[1] + "\r\n";
             textBox1.Text = textBox1.Text + "BT DISC: " + linkResponseTimes[2] + "\r\n";
             textBox1.Text = textBox1.Text + "LCA RTT: " + linkResponseTimes[3] + "\r\n";
-            textBox1.Text = textBox1.Text + "BT Conn: " + linkResponseTimes[4] + "\r\n";
-            textBox1.Text = textBox1.Text + "BT RTT: " + linkResponseTimes[5] + "\r\n";
+            textBox1.Text = textBox1.Text + "BT 1 Conn: " + linkResponseTimes[4] + "\r\n";
+            textBox1.Text = textBox1.Text + "BT ALL Conn: " + linkResponseTimes[5] + "\r\n";
             textBox1.Text = textBox1.Text + "Signing: " + linkResponseTimes[6] + "\r\n";
             textBox1.Text = textBox1.Text + "verifying: " + linkResponseTimes[7] + "\r\n";
             textBox1.Text = textBox1.Text + "filter: " + linkResponseTimes[8] + "\r\n";
@@ -167,9 +178,9 @@ namespace SmartDeviceProject1
             // Create a new List
             List<String> timeStatList = new List<String>();
             //run test for 1 hour
-            //int x = 0;
-            while (elapsedTime.TotalMinutes <= 60)
-            //while (x <= 0)
+            int x = 0;
+            //while (elapsedTime.TotalMinutes <= 60)
+            while (x <= 0)
             {
                 int dat1 = System.Environment.TickCount;
                 clnt.sendToLBS(textBox1);
@@ -184,7 +195,7 @@ namespace SmartDeviceProject1
                 currTime = DateTime.Now;
                 elapsedTime = currTime - startTime;
                 //textBox1.Text = textBox1.Text + "elapsedTime: " + elapsedTime.TotalMinutes + " \r\n";
-                //x = 1;
+                x++;
             }
             textBox1.Text = textBox1.Text + "elapsedTime: " + elapsedTime.TotalMinutes + " \r\n";
             report.writeToFile(timeStatList);
