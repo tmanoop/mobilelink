@@ -22,8 +22,6 @@ import javax.crypto.SealedObject;
 
 import org.apache.commons.codec.binary.Base64;
 
-import sun.misc.BASE64Decoder;
-
 
 public class DigitalSignature {
 	static private final int BITS_IN_MODULUS = 1024;
