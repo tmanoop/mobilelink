@@ -29,12 +29,12 @@ public class TestServer
 		{
 			
 			// Create a Server Socket at local host on the Port 8000
-			ServerSocket serverSocket = new ServerSocket(8000);
+			ServerSocket serverSocket = new ServerSocket(9000);
 			System.out.println("This is a Server at ");
 			
 			// Notify the IP Address and Port Number to the user
 			System.out.println("IP Address		: " +((serverSocket.getInetAddress()).getLocalHost()).getHostAddress());
-			System.out.println("Port Number		: 8000");
+			System.out.println("Port Number		: 9000");
 
 			// Accept clients one after another
 			while(true)
@@ -53,22 +53,23 @@ public class TestServer
 				
 				// Create an output stream to send response to the Client Socket
 				PrintStream outputStream = new PrintStream(clientSocket.getOutputStream());
-				Scanner sc = new Scanner(temp).useDelimiter("Manoop");
+				Scanner sc = new Scanner(temp).useDelimiter("manoop");
 				
 				// Read message sent by client
 				//clientsMessage = inputStream.readLine();
-				byte[] m = sc.next().getBytes();
+				byte[] m = sc.next().getBytes("ASCII");
 				
 				System.out.println("m: "+new String(m));
 				
 				//clientsMessage = inputStream.readLine();
-				byte[] exp = sc.next().getBytes();
+				byte[] exp = sc.next().getBytes("ASCII");
 				
 				System.out.println("exp: "+new String(exp));
 				
 				//clientsMessage = inputStream.readLine();
-				byte[] s = sc.next().getBytes();
-			
+				byte[] s = sc.next().getBytes("ASCII");
+				String myString = new String(s);
+				s = com.sun.org.apache.xerces.internal.impl.dv.util.Base64.decode(myString);
 				System.out.println("s: "+new String(s));
 				
 				//clientsMessage = inputStream.readLine();

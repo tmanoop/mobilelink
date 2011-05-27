@@ -45,14 +45,20 @@ public class LCA {
 
 	private void loadVerifiersList() {
 		verifiersAddresses = new ArrayList<String>();
-		verifiersAddresses.add("0012D14C0895");
-		verifiersAddresses.add("0012D15E190D");
-		verifiersAddresses.add("0012D169146F");
-		verifiersAddresses.add("00123775CDE2");
-		verifiersAddresses.add("0012D1523438");
-		verifiersAddresses.add("0012D15E1956");
-		verifiersAddresses.add("0017E4CB0D00");
-		verifiersAddresses.add("0012D17650E3");		
+		verifiersAddresses.add("BC:0D:A5:87:71:C9"); //DROID4 - Daniel
+		verifiersAddresses.add("BC:0D:A5:8E:89:BB"); //DROID3 - Susan
+		verifiersAddresses.add("BC:0D:A5:8E:E3:49"); //DROID4 - Mohammad
+		verifiersAddresses.add("BC:0D:A5:87:F1:76"); //DROID1 - Manoop
+		verifiersAddresses.add("10:2E:AF:57:47:B6"); //DROID5 - Hillol
+		verifiersAddresses.add("BC:0D:A5:87:F1:1D"); //DROID6 - Professor
+//		verifiersAddresses.add("0012D14C0895");
+//		verifiersAddresses.add("0012D15E190D");
+//		verifiersAddresses.add("0012D169146F");
+//		verifiersAddresses.add("00123775CDE2");
+//		verifiersAddresses.add("0012D1523438");
+//		verifiersAddresses.add("0012D15E1956");
+//		verifiersAddresses.add("0017E4CB0D00");
+//		verifiersAddresses.add("0012D17650E3");		
 	}
 
 	public boolean isValidVerifier(String address){

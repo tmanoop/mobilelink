@@ -67,8 +67,8 @@ public class LCAMultiThreadedServer implements Runnable{
 					c.time = s.nextInt();
 					
 					c.setMOBIP(s.next()); //this didnot work when testing in NJIT network, use below line
-					//s.next();
-					//c.setMOBIP(clientSocket.getInetAddress().toString());
+//					s.next();
+//					c.setMOBIP(clientSocket.getInetAddress().toString());
 					List<String> verifiersAddressList = new ArrayList<String>();
 					String validAddresses ="";
 					while(s.hasNext()){
