@@ -60,9 +60,9 @@ public class BluetoothChatService {
     private ConnectedThread mConnectedThread;
     private int mState;
     
-	
-	public Context context;
-	public Activity activity;
+        
+        public Context context;
+        public Activity activity;
 
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
@@ -76,9 +76,9 @@ public class BluetoothChatService {
      * @param handler  A Handler to send messages back to the UI Activity
      */
     public BluetoothChatService(Context cntxt, Activity actvty) {
-    	
-    	context = cntxt;
-		activity = actvty;
+        
+        context = cntxt;
+                activity = actvty;
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         //mHandler = handler;
@@ -336,7 +336,7 @@ public class BluetoothChatService {
             try {
                 // This is a blocking call and will only return on a
                 // successful connection or an exception
-            	long blConn1 = System.currentTimeMillis();
+                long blConn1 = System.currentTimeMillis();
                 mmSocket.connect();
                 long blConn2 = System.currentTimeMillis();
                 long blConn = blConn2 - blConn1;
@@ -414,9 +414,9 @@ public class BluetoothChatService {
                     // Read from the InputStream
                     bytes = mmInStream.read(buffer);
                     int i=0;
-                	String trID = new String(buffer);
-                	if(D) Log.i(TAG,"claim msg: "+trID.trim());
-                	String id = ""+mAdapter.getName().charAt(5);
+                        String trID = new String(buffer);
+                        if(D) Log.i(TAG,"claim msg: "+trID.trim());
+                        String id = ""+mAdapter.getName().charAt(5);
                     Claimer cl = new Claimer(context,activity);
                     cl.verificationToLCA(id,trID);
                     

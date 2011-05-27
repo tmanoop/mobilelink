@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello Link!</string>
-    <string name="app_name">Hello, LINK</string>
+    <string name="hello">Get a free coupon!!</string>
+    <string name="app_name">Hello, User</string>
 
     <!--  BluetoothChat -->
     <string name="send">Send</string>
@@ -23,4 +23,5 @@
     <!-- Options Menu -->
     <string name="connect">Connect a device</string>
     <string name="discoverable">Make discoverable</string>
+    <string name="STORE">STORE</string>
 </resources>

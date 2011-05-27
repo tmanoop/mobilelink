@@ -42,7 +42,7 @@ public class Claimer implements Runnable{
 	public void run() {
 		try {
 			long stopDisc = System.currentTimeMillis();
-			while((stopDisc - startDisc) < 5000){
+			while((stopDisc - startDisc) < 9000){
 				stopDisc = System.currentTimeMillis();
 			}
 			//cancel ongoing bluetooth discovery after 5sec
