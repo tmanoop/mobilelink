@@ -15,8 +15,10 @@ public class LBSWorkerRunnable implements Runnable{
 
     protected Socket clientSocket = null;
     protected String serverText   = null;
+    protected String LCAIP = null;
 
-    public LBSWorkerRunnable(Socket clientSocket, String serverText) {
+    public LBSWorkerRunnable(Socket clientSocket, String serverText, String lcaIP) {
+    	LCAIP = lcaIP;
         this.clientSocket = clientSocket;
         this.serverText   = serverText;
     }
@@ -95,12 +97,33 @@ public class LBSWorkerRunnable implements Runnable{
 			//if claimer, then reply back requesting location verification. "verify your location at LCA"
 			else if(clientsMessage.contains("claim")){
 				System.out.println("Message from Client: " + clientsMessage);
-				String msg = "verify your location at LCA.";
+				
+				//Notify LCA.(which will check for Bluetooth inquiry clash 
+				//and will set the start time for Bluetooth discovery)
+				String lbsMsg="LBSRequest";
+				
+				Socket lcaSocket = new Socket(LCAIP,8000);
+				PrintStream lcaStream=new PrintStream(lcaSocket.getOutputStream());
+				lcaStream.print(lbsMsg);
+				lcaStream.flush();
+				
+				String startDisc ="";
+				
+//				BufferedReader inputLCAStream= new BufferedReader(new InputStreamReader(lcaSocket.getInputStream()));
+//				
+//				String startDisc = inputLCAStream.readLine();
+				
+				
+				String msg = "verify your location at LCA,startDiscoveryAt,"+startDisc;
 				//clientSocket.getInetAddress();
 				outputStream.print(msg);
 				//Socket mobSocket = new Socket("128.235.69.143",8001);
 				//PrintStream mobStream=new PrintStream(clientSocket.getOutputStream());
 				//mobStream.print(msg);
+				System.out.println("sent to mobile..");
+
+				lcaStream.close();
+				lcaSocket.close();
 			}
 			//if LCA, then process the service request as per the decision.
 			

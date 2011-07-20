@@ -79,7 +79,7 @@ public class ParseFiles
     
     public static void main(String[] args) {
 		try {
-			String fileName = "BLConn\\V1PowerTrace1304304504832";
+			String fileName = "Idle\\sleeppolicyoff\\WIFIBLOFF_PowerTrace1307562759722";
 			String PATH_OF_YOUR_LOG_FILE = "C:\\Manoop\\njit\\LINK_journal_work\\Android_TestResults\\"+fileName+".log";
 			ParseFiles parseFiles = new ParseFiles(PATH_OF_YOUR_LOG_FILE);
 		} catch (Exception e) {
