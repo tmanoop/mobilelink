@@ -141,14 +141,18 @@ public class Claimer implements Runnable{
 			if(D) showToast("Client socket connecting... ");
 			// Create a Client socket bound to a server at IPAddress Port 8000
 			//InetAddress serverAddr = InetAddress.getByName(IPAddress);
-
+			long soc1 = System.currentTimeMillis();
 			Socket clientSocket = new Socket(serverAddr,port);
-
+			long soc2 = System.currentTimeMillis();
+            long soc = soc2 - soc1;
+            tv.append("soc time: "+soc+" \r\n");
+            
 			System.out.println("Client socket connected... ");
 			if(D) showToast("Client socket connected... ");
 			// Create an output stream to send the message to server
 			PrintStream outputStream=new PrintStream(clientSocket.getOutputStream());
 			String msg = "claim: My current Location \n";
+			long con1 = System.currentTimeMillis();
 			outputStream.print(msg);
 			
 			outputStream.flush();
@@ -157,6 +161,9 @@ public class Claimer implements Runnable{
 			BufferedReader inputStream= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			
 			String response = inputStream.readLine();
+			long con2 = System.currentTimeMillis();
+            long con = con2 - con1;
+            tv.append("con time: "+con+" \r\n");
 			System.out.println("Response from Server : "+response);
 
 			if(D) showToast("LBS response: "+response);

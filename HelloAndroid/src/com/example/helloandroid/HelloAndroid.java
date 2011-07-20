@@ -189,7 +189,7 @@ public class HelloAndroid extends Activity {
     
     public void initiateListener(){
         //Below line is for testing signing
-        //testSignVerify();
+        testSignVerify();
         Button linkButton = (Button) findViewById(R.id.button1);
         linkButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -459,15 +459,20 @@ public class HelloAndroid extends Activity {
                    toast.show();
         }
     
-//    public void testSignVerify(){
-//      Button signButton = (Button) findViewById(R.id.button2);
-//      signButton.setOnClickListener(new OnClickListener() {
-//            public void onClick(View v) {
-//              Context context = getApplicationContext();
-//                         Claimer cl = new Claimer(context,HelloAndroid.this);
-//                         cl.sendToServer();
-//            }
-//        });
-//    }
+    public void testSignVerify(){
+      Button signButton = (Button) findViewById(R.id.button2);
+      signButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+              Context context = getApplicationContext();
+                         Claimer cl = new Claimer(context,HelloAndroid.this);
+                         //cl.sendToServer();
+                         long lbs1 = System.currentTimeMillis();
+                         cl.sendToLBS();
+                         long lbs2 = System.currentTimeMillis();
+                         lbsRTT = lbs2 - lbs1;
+                         tv.append("LBS RTT: "+lbsRTT+" \r\n");
+            }
+        });
+    }
     
 }
