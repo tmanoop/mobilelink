@@ -9,6 +9,7 @@ public class LBSMultiThreadedServer implements Runnable{
     protected boolean      isStopped    = false;
     protected Thread       runningThread= null;
     static int threadCount = 0; 
+    protected String LCAIP;
 
     public LBSMultiThreadedServer(int port){
         this.serverPort = port;
@@ -35,7 +36,7 @@ public class LBSMultiThreadedServer implements Runnable{
             System.out.println("Thread "+threadCount++) ;
             new Thread(
                 new LBSWorkerRunnable(
-                    clientSocket, "Thread "+threadCount)
+                    clientSocket, "Thread "+threadCount, LCAIP)
             ).start();
         }
         System.out.println("Server Stopped.") ;
@@ -60,8 +61,9 @@ public class LBSMultiThreadedServer implements Runnable{
             this.serverSocket = new ServerSocket(this.serverPort);
             System.out.println("This is a Server at ");
     		
+            LCAIP = ((serverSocket.getInetAddress()).getLocalHost()).getHostAddress();
     		// Notify the IP Address and Port Number to the user
-    		System.out.println("IP Address		: " +((serverSocket.getInetAddress()).getLocalHost()).getHostAddress());
+    		System.out.println("IP Address		: " +LCAIP);
     		System.out.println("Port Number		: "+serverPort);
         } catch (IOException e) {
             throw new RuntimeException("Cannot open port "+serverPort, e);

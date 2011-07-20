@@ -11,7 +11,7 @@ import java.io.PrintStream;
 
 public class LCAMultiThreadedServer implements Runnable{
 
-    protected int          serverPort   = 8080;
+    protected int          serverPort   = 8000;
     protected ServerSocket serverSocket = null;
     protected boolean      isStopped    = false;
     protected Thread       runningThread= null;
@@ -139,6 +139,15 @@ public class LCAMultiThreadedServer implements Runnable{
 						parent.notify();
 					}
 					System.out.println(tr_id+"  tr_id. Updated verifiers count to: "+parent.verifiersCount+" at "+new Date());
+				} else if(clientsMessage.contains("LBSRequest")){
+					boolean clash = checkBLInquiryClash();
+					System.out.println("clash: "+clash);
+					int startDisc = 0; 
+					if(clash == true)
+						startDisc = 7;
+					setClashTimer();
+					outputStream.print(""+startDisc);
+					outputStream.flush();
 				}
 				else
 					System.out.println("Request recieved at " + new Date());
@@ -154,7 +163,21 @@ public class LCAMultiThreadedServer implements Runnable{
     }
 
 
-    private synchronized boolean isStopped() {
+    private void setClashTimer() {
+    	setBLInquiryClash(true); 
+    	Clash clash = new Clash(lca);
+    	new Thread(clash).start();
+	}
+
+	private void setBLInquiryClash(boolean clash) {
+    	lca.BL_INQUIRY_CLASH = clash;    	
+	}
+
+	private boolean checkBLInquiryClash() {
+		return lca.BL_INQUIRY_CLASH;
+	}
+
+	private synchronized boolean isStopped() {
         return this.isStopped;
     }
 
@@ -177,7 +200,7 @@ public class LCAMultiThreadedServer implements Runnable{
     		System.out.println("IP Address		: " +LBSIP);
     		System.out.println("Port Number		: "+serverPort);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot open port 8080", e);
+            throw new RuntimeException("Cannot open port "+serverPort, e);
         }
     }
 

@@ -14,6 +14,8 @@ public class LCA {
 	int POOR = 0; 
 	int GOOD = 1;
 	
+	boolean BL_INQUIRY_CLASH = false;
+	
 	int tr_id = 0;
 	HashMap<Integer,Transaction> transactions;
 	ArrayList<User> mobileUsers;
