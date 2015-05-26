@@ -1,0 +1,1 @@
+LINK project is the Android Implementation for location verification project
